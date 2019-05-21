@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-btn to='/test'>Відкрити тест</v-btn>
+    <v-btn to='/test'>Тестування</v-btn>
     <v-btn color="success" @click="fetchUsers">Fetch</v-btn>
     <app-counter></app-counter>
     <v-flex xs1>

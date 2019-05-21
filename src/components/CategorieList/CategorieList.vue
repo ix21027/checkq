@@ -1,59 +1,52 @@
 <template>
-  <v-layout>
-    <v-flex col>
-      <h1>ОБЕРІТЬ КАТЕГОРІЇ ДЛЯ ТЕСТУВАННЯ</h1>
-      <app-categories
-        :categories='categories.list'
-        v-model="selectedCategories"
-      ></app-categories>
-      <v-layout row wrap mt-5 mb-5>
-        <v-slider
-          v-model="testNumber"
-          label="Кількість тестів"
-          step="10"
-          max="60"
-          min="10"
-          thumb-label="always"
-          ticks
-        ></v-slider>
-        <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-btn color="success">Почати тестування</v-btn>
-        <v-spacer></v-spacer>
-      </v-layout>
-    </v-flex>
+  <v-layout row wrap>
+    <v-flex
+      v-for="categorie in categories"
+      :key="categorie.id"
+      class="ctg-cart"
+      :class="{select: selectedCategories.includes(categorie.id)}"
+    >
+    <img :src="categorie.imgUrl" alt="Фон категорії" class="ctg-img">
+    <v-layout class="ctg-title" justify-center align-center>
+      <label class='switch'>
+        <div class="mark-icon">
+          <v-icon
+            class="check-icon"
+            color="white">
+              check
+          </v-icon>
+        </div>
+        <div class="text">
+            {{categorie.title}}
+        </div>
+        <input
+          type="checkbox"
+          :value="categorie.id"
+          :label="categorie.title"
+          v-model="selectedCategories"
+        >
+      </label>
+    </v-layout>
+  </v-flex>
   </v-layout>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
-import CategorieList from '@/components/CategorieList/CategorieList.vue'
 
 export default {
-  name: 'home',
   data: () => {
     return {
-      selectedCategories: [],
-      testNumber: 30
+      selectedCategories: []
     }
   },
-  methods: {
-    ...mapActions([
-      'fetchCategories'
-    ])
+  props: [
+    'categories'
+  ],
+  watch: {
+    selectedCategories() {
+      this.$emit('input', this.selectedCategories);
+    }
   },
-  computed: {
-    ...mapState([
-      'categories'
-    ])
-  },
-
-  components: {
-    appCategories: CategorieList,
-  },
-  mounted() {
-    this.fetchCategories();
-  }
 }
 </script>
 
@@ -129,5 +122,4 @@ export default {
     }
   }
 </style>
-
 

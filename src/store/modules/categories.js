@@ -22,20 +22,23 @@ const categoriesStore = {
   },
   actions: {
     async fetchCategories({ commit }) {
-      // TODO add api request
-      // get /api/subjects
+      commit('startToFetchCategories');
+
       const headers = {
         'Content-type': 'application/json',
         'Accept': 'application/json'
       }
-      const data = await axios.get('https://checkq-api.herokuapp.com/api/subjects', {
-        headers
-      });
-      // console.log(data.data);
-      commit('startToFetchCategories');
-      await setTimeout(() => commit('successToFetchCategories', {
-        categoriesList: data.data,
-      }), 1000);
+
+      try {
+        const data = await axios.get('https://checkq-api.herokuapp.com/api/subjects', {
+          headers
+        });
+        commit('successToFetchCategories', {
+          categoriesList: data.data,
+        })
+      } catch (error) {
+        commit('failedToFetchCategories', { error })
+      }
     }
   }
 };

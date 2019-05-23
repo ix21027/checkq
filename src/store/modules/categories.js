@@ -1,10 +1,12 @@
 import fecthStatus from '@/constants/fetchStatus'
-import catogoriesMock from '@/mocks/categories'
+// import catogoriesMock from '@/mocks/categories'
+import axios from 'axios';
 
 const categoriesStore = {
   state: {
     list: [],
-    fetchStatus: fecthStatus.success,
+    selectedCategories: [],
+    fetchStatus: fecthStatus.failed,
   },
   mutations: {
     successToFetchCategories(state, payload) {
@@ -22,8 +24,17 @@ const categoriesStore = {
     async fetchCategories({ commit }) {
       // TODO add api request
       // get /api/subjects
+      const headers = {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+      const data = await axios.get('https://checkq-api.herokuapp.com/api/subjects', {
+        headers
+      });
+      // console.log(data.data);
+      commit('startToFetchCategories');
       await setTimeout(() => commit('successToFetchCategories', {
-        categoriesList: catogoriesMock,
+        categoriesList: data.data,
       }), 1000);
     }
   }

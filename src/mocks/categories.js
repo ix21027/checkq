@@ -49,6 +49,12 @@ const data = [
     countOfTest: 157,
     imgUrl: 'https://picsum.photos/400/300'
   },
+  {
+    title: 'Математичний аналіз',
+    id: 9,
+    countOfTest: 157,
+    imgUrl: 'https://picsum.photos/400/300'
+  },
 ]
 
 export default data;

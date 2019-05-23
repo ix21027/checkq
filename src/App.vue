@@ -11,10 +11,19 @@
 
 <script>
 import Header from './components/Header/Header'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
     appHeader: Header,
+  },
+  methods: {
+    ...mapActions([
+      'fetchCategories',
+    ])
+  },
+  beforeMount() {
+    this.fetchCategories();
   }
 }
 </script>

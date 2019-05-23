@@ -5,6 +5,8 @@
       <app-categories
         :categories='categories.list'
         v-model="selectedCategories"
+        :loading="categories.fetchStatus == 'START_FETCH'"
+        @markAll="selectAll"
       ></app-categories>
       <v-layout row wrap mt-5 mb-5>
         <v-slider
@@ -18,16 +20,16 @@
         ></v-slider>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
-        <v-btn color="success">Почати тестування</v-btn>
-        <v-spacer></v-spacer>
+        <v-btn color="success" to='/test' :disabled="selectedCategories.length === 0">Почати тестування</v-btn>
       </v-layout>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import CategorieList from '@/components/CategorieList/CategorieList.vue'
+import fetchStatus from '@/constants/fetchStatus.js'
 
 export default {
   name: 'home',
@@ -37,28 +39,32 @@ export default {
       testNumber: 30
     }
   },
+
   methods: {
-    ...mapActions([
-      'fetchCategories'
-    ])
+    selectAll() {
+      if (this.selectedCategories.length === this.categories.length) {
+        this.selectedCategories = []
+      } else {
+        this.selectedCategories = [...this.categories.list.map(c => c.id)]
+      }
+    }
   },
   computed: {
     ...mapState([
-      'categories'
-    ])
+      'categories',
+    ]),
+    loading() {
+      return (this.categories.fetchStatus == fetchStatus.start)
+    }
   },
 
   components: {
     appCategories: CategorieList,
   },
-  mounted() {
-    this.fetchCategories();
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-
   .ctg-cart {
     width: 300px;
     height: 250px;
@@ -74,13 +80,13 @@ export default {
       .ctg-title {
         height: 100%;
         .switch {
-        .mark-icon {
-          width: 40px;
-          height: 40px;
-          border: 2px solid rgb(35, 177, 54);
-          border-radius: 40px;
+          .mark-icon {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgb(35, 177, 54);
+            border-radius: 40px;
+          }
         }
-      }
       }
     }
     .ctg-title {
@@ -108,7 +114,7 @@ export default {
         box-sizing: border-box;
         color: #fff;
         cursor: pointer;
-        flex-direction: column; 
+        flex-direction: column;
         width: 100%;
         height: 100%;
         input {
@@ -129,5 +135,3 @@ export default {
     }
   }
 </style>
-
-

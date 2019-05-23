@@ -1,37 +1,46 @@
 <template>
-  <v-layout row wrap>
-    <v-flex
-      v-for="categorie in categories"
-      :key="categorie.id"
-      class="ctg-cart"
-      :class="{select: selectedCategories.includes(categorie.id)}"
-    >
-    <img :src="categorie.imgUrl" alt="Фон категорії" class="ctg-img">
-    <v-layout class="ctg-title" justify-center align-center>
-      <label class='switch'>
-        <div class="mark-icon">
-          <v-icon
-            class="check-icon"
-            color="white">
-              check
-          </v-icon>
-        </div>
-        <div class="text">
-            {{categorie.title}}
-        </div>
-        <input
-          type="checkbox"
-          :value="categorie.id"
-          :label="categorie.title"
-          v-model="selectedCategories"
+  <v-layout column wrap class="ctg-list" pa-2 mt-3>
+    <app-categorie-loader v-if='loading'></app-categorie-loader>
+    <v-layout column wrap v-else>
+      <v-layout row wrap>
+        <v-btn @click="toggleAllSelect" v-if='categories.length > 1'>Вибрати все</v-btn>
+      </v-layout>
+      <v-layout wrap>
+        <v-flex
+          v-for="categorie in categories"
+          :key="categorie.id"
+          class="ctg-cart"
+          :class="{select: selectedCategories.includes(categorie.id)}"
         >
-      </label>
+          <img :src="categorie.avatar" alt="Фон категорії" class="ctg-img">
+          <v-layout class="ctg-title" justify-center align-center>
+            <label class='switch'>
+              <div class="mark-icon">
+                <v-icon
+                  class="check-icon"
+                  color="white">
+                    check
+                </v-icon>
+              </div>
+              <div class="text">
+                  {{categorie.name}}
+              </div>
+              <input
+                type="checkbox"
+                :value="categorie.id"
+                :label="categorie.name"
+                v-model="selectedCategories"
+              >
+            </label>
+          </v-layout>
+        </v-flex>
+      </v-layout>
     </v-layout>
-  </v-flex>
   </v-layout>
 </template>
 
 <script>
+import CategorieLoader from './CategorieLoader.vue';
 
 export default {
   data: () => {
@@ -40,18 +49,31 @@ export default {
     }
   },
   props: [
-    'categories'
+    'categories',
+    'loading'
   ],
+  methods: {
+    toggleAllSelect() {
+      if (this.selectedCategories.length !== this.categories.length) {
+        this.selectedCategories = this.categories.map(c => c.id);
+      } else {
+        this.selectedCategories = [];
+      }
+
+    }
+  },
   watch: {
     selectedCategories() {
       this.$emit('input', this.selectedCategories);
     }
   },
+  components: {
+    appCategorieLoader: CategorieLoader,
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-
   .ctg-cart {
     width: 300px;
     height: 250px;

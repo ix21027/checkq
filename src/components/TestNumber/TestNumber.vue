@@ -1,6 +1,6 @@
 <template>
 	<div class="place">
-		<v-btn @click="color =(color == '#BBDEFB' ? '#00E676':'#BBDEFB')" class="cell" :color="color" depressed  fab small>{{index}}</v-btn>
+		<v-btn @click="setPassed()" class="cell" :color="passed ? '#00E676':'#BBDEFB'" depressed  fab small>{{index}}</v-btn>
 	</div>
 </template>
 
@@ -8,10 +8,15 @@
 export default {
 	data() {
 		return {
-			color:'#BBDEFB'
+			passed:false,
 		}
 	},
 	props:['index'],
+	methods: {
+		setPassed(){
+			this.passed = !this.passed
+		}
+	},
 
 }
 </script>

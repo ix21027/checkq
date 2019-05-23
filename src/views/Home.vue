@@ -18,7 +18,7 @@
         ></v-slider>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
-        <v-btn color="success">Почати тестування</v-btn>
+        <v-btn to="/test" color="success">Почати тестування</v-btn>
         <v-spacer></v-spacer>
       </v-layout>
     </v-flex>

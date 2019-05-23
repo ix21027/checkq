@@ -20,12 +20,7 @@
         ></v-slider>
         <v-spacer></v-spacer>
         <v-spacer></v-spacer>
-<<<<<<< HEAD
-        <v-btn to="/test" color="success">Почати тестування</v-btn>
-        <v-spacer></v-spacer>
-=======
         <v-btn color="success" to='/test' :disabled="selectedCategories.length === 0">Почати тестування</v-btn>
->>>>>>> dev
       </v-layout>
     </v-flex>
   </v-layout>

@@ -1,29 +1,77 @@
 // list of tests
 
 const data = [
-	{
-		id:1,
-		ansver:'Сколько планет в солнечной системе?',
-		option_1:'штук 5',
-		option_2:'штук 9',
-		option_3:'штук 3',
-		option_4:'штук 8'
-	},
-	{
-		id:2,
-		ansver:'Сколько дней в году?',
-		option_1:'365',
-		option_2:'368',
-		option_3:'85',
-		option_4:'123'
-	},
-	{
-		id:3,
-		ansver:'Кто с них был величайшим физиком?',
-		option_1:'Альбус Дамбылдор',
-		option_2:'Дайнерис Таргариен',
-		option_3:'Альберт Эйнштейн',
-		option_4:'Валисилий Пупкин'
-	}
+  {
+    id:1,
+    question:'Сколько планет в солнечной системе?',
+    options:[
+      {
+        id:1,
+        title: 'штук 5'
+      },
+      {
+        id:2,
+        title: 'штук 9'
+      },
+      {
+        id:3,
+        title: 'штук 10'
+      },
+      {
+        id:4,
+        title: 'штук 8'
+      }
+    ]
+  },
+  {
+    id:2,
+    question:'Сколько тебе лет?',
+    options:[
+      {
+        id:1,
+        title: 'где то 15'
+      },
+      {
+        id:2,
+        title: 'где то 50'
+      },
+      {
+        id:3,
+        title: 'около 6'
+      },
+      {
+        id:4,
+        title: '18-'
+      }
+    ]
+  },
+  {
+    id:3,
+    question:'2х2+4-2х4+2 = ?',
+    options:[
+      {
+        id:1,
+        title: '5'
+      },
+      {
+        id:2,
+        title: '4'
+      },
+      {
+        id:3,
+        title: '3'
+      },
+      {
+        id:4,
+        title: '2'
+      }
+    ]
+  }
 ]
+// var a = {test: [
+//   {
+//     id_question:1,
+//     id_answer:1
+//   }
+// ]}
 export default data;

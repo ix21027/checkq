@@ -3,32 +3,40 @@
     <v-flex md10 sm11>
         <v-card >
           <v-card-title>
-            <b>{{currentTest.answer}}{{answer}}
-            </b>
+            <h3><b>{{currentNumber+1}}. {{currentTest.question}}</b></h3>
           </v-card-title>
           <v-card-text>
-            <v-radio-group v-model="answer">
+            <v-radio-group v-model="answer[currentNumber]">
               <v-radio
                 v-for="(n,i) in currentTest.options"
-                :key="i"
-                :label="letters[i]+'.  '+n"
-                :value="i"
+                :key="n.id"
+                :label="letters[i]+'.  '+n.title"
+                :value="n.id"
               ></v-radio>
-              <label for=""></label>
             </v-radio-group>
           </v-card-text>
           <v-card-actions>
             <v-layout column>
               <v-layout row>
                 <v-flex xs4 sm3 md2>
-                  <v-btn flat left @click="previosQuestion" outline color="grean" :disabled="currentId==0" >НАЗАД</v-btn>
+                  <v-btn flat left @click="previosQuestion" outline color="grean" :disabled="currentNumber==0" >НАЗАД</v-btn>
                 </v-flex>
-                <v-flex xs4 sm6 md8>
-                  <v-spacer></v-spacer>
-                </v-flex>
-                <v-flex xs4 sm3 md2>
-                  <v-btn flat right @click="nextQuestion" outline color="success" :disabled="tests.list.length==currentId+1">ДАЛІ</v-btn>
-                </v-flex>
+                <template v-if="!(tests.list.length===(currentNumber+1))">
+                  <v-flex xs4 sm6 md8>
+                    <v-spacer></v-spacer>
+                  </v-flex>
+                  <v-flex xs4 sm3 md2>
+                    <v-btn flat right @click="nextQuestion" outline color="success">ДАЛІ</v-btn>
+                  </v-flex>
+                </template>
+                <template v-else>
+                  <v-flex xs3 sm5 md7>
+                    <v-spacer></v-spacer>
+                  </v-flex>
+                  <v-flex xs5 sm4 md3>
+                    <v-btn flat right @click="endTest" outline color="success">Закінчити тест</v-btn>
+                  </v-flex>
+                </template>
               </v-layout>
               <v-layout row pr-3 pb-3>
                 <v-flex xs6 sm8 md8 >
@@ -45,39 +53,61 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations} from 'vuex';
 import letters from './../../constants/lettersForTest'
 
 export default {
   data() {
     return {
       letters:letters,
-      answer:null
+      answer:[]
     }
   },
   props:[
-    'currentId'
+    'currentNumber'
   ],
   computed: {
     ...mapState([
       'tests'
     ]),
     currentTest(){
-      // return this.tests.list.filter(x => x.id == this.currentId)[0]
-      return this.tests.list[this.currentId]
+      return this.tests.list[this.currentNumber]
+    }
+  },
+  watch: {
+    answer(){
+      this.setAnswer({
+        index: this.currentNumber,
+        answer: this.answer[this.currentNumber],
+        numb: this.currentNumber
+        })
+      this.setCountPassed({
+        count: this.answer.filter(i => i!==null).length
+      })
     }
   },
   methods: {
+    ...mapMutations([
+      'setAnswer',
+      'setCountPassed',
+      'changeCurrentNumber',
+      'stopTestTime',
+      'startToFetchTests'
+    ]),
     nextQuestion(){
-      this.$store.commit('changeCurrentId',{currentId: this.currentId+1})
+      this.changeCurrentNumber({currentNumber: this.currentNumber+1})
     },
     previosQuestion(){
-       this.$store.commit('changeCurrentId',{currentId: this.currentId-1})
+      this.changeCurrentNumber({currentNumber: this.currentNumber-1})
+    },
+    endTest(){
+      this.stopTestTime()
+      // this.startToFetchTests()
     }
   },
   components:{
     Timer: () => import('./../Timer/Timer'),
-    Count: () => import('./../Count/Count')
+    Count: () => import('./../Count/Count'),
   }
 }
 </script>

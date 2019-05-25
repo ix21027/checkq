@@ -6,13 +6,6 @@
     lazy-validation
   >
     <v-text-field
-      v-model="username"
-      :rules="usernameRules"
-      label="Username"
-      prepend-icon="fingerprint"
-    />
-
-    <v-text-field
       v-model="email"
       :rules="emailRules"
       label="E-mail"
@@ -29,18 +22,7 @@
       :type="passwordShow ? 'text' : 'password'"
       :append-icon="passwordShow ? 'visibility_off': 'visibility'"
       @click:append='passwordShow = !passwordShow'
-      autocomplete='new-password'
-    />
-
-    <v-text-field
-      v-model="confirm"
-      :rules="confirmRules"
-      label="Confirm password"
-      prepend-icon="autorenew"
-      :type="confirmShow ? 'text' : 'password'"
-      :append-icon="confirmShow ? 'visibility_off': 'visibility'"
-      @click:append='confirmShow = !confirmShow'
-      autocomplete='new-password'
+      autocomplete='curr-password'
     />
 
     <v-layout justify-end>
@@ -50,7 +32,7 @@
           to='privacy'
         >
           <v-icon left>error</v-icon>
-          Політика конфеденційності
+          Забули пароль?
         </v-btn>
       </v-flex>
       <v-flex shrink>
@@ -58,9 +40,9 @@
           :disabled="!valid"
           color='info'
         >
-          Підтвердити
+          Ввійти
         </v-btn>
-      </v-flex> 
+      </v-flex>
     </v-layout>
   </v-form>
 </v-flex>
@@ -68,18 +50,11 @@
 </template>
 
 <script>
-// import validateConfig from '@/config/validation'
 
 export default {
   data() {
     return {
       valid: false,
-      username: '',
-      usernameRules: [
-        v => !!v || 'Поле обовя\'зкове',
-        v => v.length >= 3 || 'Мінімум 3 символа',
-        v => v.length <= 15 || 'Максимум 15 символів',
-      ],
       email: '',
       emailRules: [
         v => !!v || 'Поле обовя\'зкове',
@@ -90,11 +65,6 @@ export default {
       passwordRules: [
         v => !!v || 'Поле обовя\'зкове',
         v => v.length >= 8 || 'Мінімум 8 символів',
-      ],
-      confirm: '',
-      confirmShow: false,
-      confirmRules: [
-        v => v === this.password || 'Паролі не збігаються',
       ]
     }
   },
@@ -103,10 +73,8 @@ export default {
       this.validate();
       if (this.valid) {
         const data = {
-          username: this.username,
           email: this.email,
           password: this.password,
-          password_confirmation: this.confirm,
         }
 
         // eslint-disable-next-line

@@ -1,11 +1,16 @@
 <template>
-  <v-layout column justify-center  md4>
-    <v-flex mb-4>
-      <h1>Реєстрація</h1>
+  <v-layout fill-height>
+    <v-flex>
+      <v-flex text-xs-center>
+        <h1>Реєстрація</h1>
+      <v-layout row wrap justify-center>
+        <app-register-form>
+        </app-register-form>
+      </v-layout>
+      </v-flex>
+
     </v-flex>
 
-    <app-register-form>
-    </app-register-form>
   </v-layout>
 </template>
 

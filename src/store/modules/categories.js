@@ -23,6 +23,7 @@ const categoriesStore = {
   actions: {
     async fetchCategories({ commit }) {
       commit('startToFetchCategories');
+      commit('startLoadResource', null, { root: true });
 
       const headers = {
         'Content-type': 'application/json',
@@ -34,8 +35,10 @@ const categoriesStore = {
           headers
         });
         commit('successToFetchCategories', { categoriesList: data.data});
+        commit('stopLoadResource', null, { root: true });
       } catch (error) {
-        commit('failToFetchCategories', { error })
+        commit('failToFetchCategories', { error });
+        commit('stopLoadResource', null, { root: true });
       }
     }
   }

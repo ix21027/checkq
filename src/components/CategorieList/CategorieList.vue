@@ -10,7 +10,8 @@
           v-for="categorie in categories"
           :key="categorie.id"
           class="ctg-cart"
-          :class="{select: selectedCategories.includes(categorie.id)}"
+          :class="{ select: selectedCategories.includes(categorie.id) }"
+
         >
           <img :src="categorie.avatar" alt="Фон категорії" class="ctg-img">
           <v-layout class="ctg-title" justify-center align-center>

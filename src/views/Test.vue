@@ -1,9 +1,6 @@
 <template>
   <v-container grid-list-xl text-xs-center>
-    <div v-if="loading">
-      <loader></loader>
-    </div>
-    <div v-else>
+    <div>
       <v-layout row wrap justify-center>
         <h2>TECT</h2>
       </v-layout>
@@ -29,7 +26,7 @@ import fetchStatus from './../constants/fetchStatus'
 
 export default {
   created() {
-    this.fetchTests()
+    
   },
   computed: {
     ...mapState([
@@ -50,7 +47,7 @@ export default {
   components:{
     ShowTest: () => import('./../components/ShowTest/ShowTest'),
     TestNavigation: ()=> import('./../components/TestNavigation/TestNavigation'),
-    Loader: ()=> import('./../components/CategorieList/CategorieLoader')
+    // Loader: ()=> import('./../components/Loader/Loader')
   }
 }
 </script>

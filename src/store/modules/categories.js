@@ -17,12 +17,13 @@ const categoriesStore = {
       state.fetchStatus = fecthStatus.start;
     },
     failToFetchCategories(state) {
-      state.fetchStatus = fecthStatus.failed;
+      state.fetchStatus = fecthStatus.fail;
     }
   },
   actions: {
     async fetchCategories({ commit }) {
       commit('startToFetchCategories');
+      commit('startLoadResource', null, { root: true });
 
       const headers = {
         'Content-type': 'application/json',
@@ -33,11 +34,11 @@ const categoriesStore = {
         const data = await axios.get('https://checkq-api.herokuapp.com/api/subjects', {
           headers
         });
-        commit('successToFetchCategories', {
-          categoriesList: data.data,
-        })
+        commit('successToFetchCategories', { categoriesList: data.data});
+        commit('stopLoadResource', null, { root: true });
       } catch (error) {
-        commit('failedToFetchCategories', { error })
+        commit('failToFetchCategories', { error });
+        commit('stopLoadResource', null, { root: true });
       }
     }
   }

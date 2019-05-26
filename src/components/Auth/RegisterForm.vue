@@ -48,7 +48,7 @@
       validate-on-blur
     />
 
-    <v-layout justify-end>
+    <v-layout justify-end wrap>
       <v-flex shrink>
         <v-btn
           flat

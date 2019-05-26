@@ -1,5 +1,5 @@
 <template>
-  <v-layout fill-height>
+  <v-layout>
     <v-flex>
       <v-flex text-xs-center>
         <h1>Реєстрація</h1>
@@ -8,9 +8,7 @@
         </app-register-form>
       </v-layout>
       </v-flex>
-
     </v-flex>
-
   </v-layout>
 </template>
 

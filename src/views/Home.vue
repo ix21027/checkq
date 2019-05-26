@@ -1,34 +1,37 @@
 <template>
   <v-layout>
     <v-flex col>
-      <h1>ОБЕРІТЬ КАТЕГОРІЇ ДЛЯ ТЕСТУВАННЯ</h1>
-      <app-categories
-        :categories='categories.list'
-        v-model="selectedCategories"
-        :loading="categories.fetchStatus == 'START_FETCH'"
-        @markAll="selectAll"
-      ></app-categories>
-      <v-layout row wrap mt-5 mb-5>
-        <v-slider
-          v-model="testNumber"
-          label="Кількість тестів"
-          step="10"
-          max="60"
-          min="10"
-          thumb-label="always"
-          ticks
-        ></v-slider>
-        <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-btn color="success" to='/test' :disabled="selectedCategories.length === 0">Почати тестування</v-btn>
-      </v-layout>
+      <h1>Оберіть категорії для тестування</h1>
+      <app-loader
+        :ready="isReady"
+        :error="isError"
+      >
+        <app-categories
+          :categories='categories.list'
+          v-model="selectedCategories"
+          @markAll="selectAll"
+        ></app-categories>
+        <v-layout row wrap mt-5 mb-5>
+          <v-slider
+            v-model="testNumber"
+            label="Кількість тестів"
+            step="5"
+            max="60"
+            min="0"
+            thumb-label="always"
+            ticks
+          ></v-slider>
+          <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
+          <v-btn color="success" to='/test' :disabled="!isValid">Почати тестування</v-btn>
+        </v-layout>
+      </app-loader>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import CategorieList from '@/components/CategorieList/CategorieList.vue'
 import fetchStatus from '@/constants/fetchStatus.js'
 
 export default {
@@ -54,12 +57,22 @@ export default {
       'categories',
     ]),
     loading() {
-      return (this.categories.fetchStatus == fetchStatus.start)
+      return (this.categories.fetchStatus === fetchStatus.start)
+    },
+    isReady() {
+      return (this.categories.fetchStatus === fetchStatus.success);
+    },
+    isError() {
+      return (this.categories.fetchStatus === fetchStatus.faile)
+    },
+    isValid() {
+      return (this.selectedCategories.length > 0 && this.testNumber > 0);
     }
   },
 
   components: {
-    appCategories: CategorieList,
+    appCategories: () => import('@/components/CategorieList/CategorieList'),
+    appLoader: () => import('@/components/Loader/Loader'),
   },
 }
 </script>

@@ -17,7 +17,7 @@ const categoriesStore = {
       state.fetchStatus = fecthStatus.start;
     },
     failToFetchCategories(state) {
-      state.fetchStatus = fecthStatus.failed;
+      state.fetchStatus = fecthStatus.fail;
     }
   },
   actions: {
@@ -33,11 +33,9 @@ const categoriesStore = {
         const data = await axios.get('https://checkq-api.herokuapp.com/api/subjects', {
           headers
         });
-        commit('successToFetchCategories', {
-          categoriesList: data.data,
-        })
+        commit('successToFetchCategories', { categoriesList: data.data});
       } catch (error) {
-        commit('failedToFetchCategories', { error })
+        commit('failToFetchCategories', { error })
       }
     }
   }

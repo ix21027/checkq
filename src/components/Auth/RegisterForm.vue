@@ -4,21 +4,24 @@
     ref='form'
     v-model="valid"
     lazy-validation
+    lazy
   >
     <v-text-field
       v-model="username"
       :rules="usernameRules"
       label="Username"
       prepend-icon="fingerprint"
+      validate-on-blur
     />
 
     <v-text-field
       v-model="email"
       :rules="emailRules"
       label="E-mail"
-      :type="email"
+      type="email"
       prepend-icon="email"
       autocomplete="username"
+      validate-on-blur
     />
 
     <v-text-field
@@ -30,6 +33,7 @@
       :append-icon="passwordShow ? 'visibility_off': 'visibility'"
       @click:append='passwordShow = !passwordShow'
       autocomplete='new-password'
+      validate-on-blur
     />
 
     <v-text-field
@@ -41,6 +45,7 @@
       :append-icon="confirmShow ? 'visibility_off': 'visibility'"
       @click:append='confirmShow = !confirmShow'
       autocomplete='new-password'
+      validate-on-blur
     />
 
     <v-layout justify-end>
@@ -48,8 +53,12 @@
         <v-btn
           flat
           to='privacy'
+          target="_blank"
         >
-          <v-icon left>error</v-icon>
+          <v-icon
+            left
+
+          >error</v-icon>
           Політика конфеденційності
         </v-btn>
       </v-flex>
@@ -60,7 +69,7 @@
         >
           Підтвердити
         </v-btn>
-      </v-flex> 
+      </v-flex>
     </v-layout>
   </v-form>
 </v-flex>

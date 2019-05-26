@@ -12,6 +12,7 @@
       :type="email"
       prepend-icon="email"
       autocomplete="username"
+      validate-on-blur
     />
 
     <v-text-field

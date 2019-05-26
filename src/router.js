@@ -31,6 +31,11 @@ export default new Router({
       path: '/test',
       name: 'test',
       component: () => import('./views/Test.vue')
+    },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: () => import('./views/Privacy.vue')
     }
   ]
 })

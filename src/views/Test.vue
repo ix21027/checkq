@@ -15,13 +15,6 @@
           <v-card>
             <v-card-text>
               <test-navigation></test-navigation>
-
-              <!-- <test-number
-                v-for="(test, index) in tests.list"
-                :key="test.id"
-                :index="index"
-              >{{test.id}}</test-number> -->
-
             </v-card-text>
           </v-card>
         </v-flex>
@@ -56,7 +49,7 @@ export default {
   },
   components:{
     ShowTest: () => import('./../components/ShowTest/ShowTest'),
-    TestNavigation: ()=> import('./../components/testNavigation/testNavigation'),
+    TestNavigation: ()=> import('./../components/TestNavigation/TestNavigation'),
     Loader: ()=> import('./../components/CategorieList/CategorieLoader')
   }
 }

@@ -45,6 +45,10 @@ const testsStore = {
   actions: {
     async fetchTests({ commit }) {
       commit('startToFetchTests');
+      commit('changeCurrentNumber',{ currentNumber: 0})
+      commit('setCountPassed',{ count: 0})
+      commit('setStartTime',{ time: null})
+      commit('setEndTime',{ time: null})
 
       await setTimeout(()=>{
         commit('successToFetchTests',{testsList:testsMock});

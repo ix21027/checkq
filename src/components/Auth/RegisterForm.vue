@@ -16,7 +16,7 @@
       v-model="email"
       :rules="emailRules"
       label="E-mail"
-      :type="email"
+      type="email"
       prepend-icon="email"
       autocomplete="username"
     />

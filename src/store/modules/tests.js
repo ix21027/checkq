@@ -49,10 +49,19 @@ const testsStore = {
       commit('setCountPassed',{ count: 0})
       commit('setStartTime',{ time: null})
       commit('setEndTime',{ time: null})
+      commit('startLoadResource', null, { root: true });
 
-      await setTimeout(()=>{
-        commit('successToFetchTests',{testsList:testsMock});
-      },2000)
+      try {
+        setTimeout(() => {
+          commit('successToFetchTests', { testsList: testsMock });
+          commit('stopLoadResource', null, { root: true });
+        }, 2000)
+      } catch (error) {
+        // console.log(error);
+        commit('errorOccured', { error }, { root: true });
+      }
+
+
       // const headers = {
       //   'Content-type': 'application/json',
       //   'Accept': 'application/json'

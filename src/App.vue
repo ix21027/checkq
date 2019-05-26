@@ -3,6 +3,7 @@
     <app-header></app-header>
     <v-content class='content'>
       <v-container>
+        <app-watcher></app-watcher>
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -16,6 +17,7 @@ import { mapActions } from 'vuex'
 export default {
   components: {
     appHeader: Header,
+    appWatcher: () => import('@/components/Watcher/Watcher')
   },
   methods: {
     ...mapActions([

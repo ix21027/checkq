@@ -7,7 +7,7 @@ const testsStore = {
   state: {
     list: [],
     currentNumber: 0,
-    fetchStatus: fecthStatus.fail,
+    fetchStatus: fecthStatus.failed,
     countPassed: 0,
     startTime: null,
     endTime: null

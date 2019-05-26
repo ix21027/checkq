@@ -24,6 +24,7 @@
       :append-icon="passwordShow ? 'visibility_off': 'visibility'"
       @click:append='passwordShow = !passwordShow'
       autocomplete='curr-password'
+      validate-on-blur
     />
 
     <v-layout justify-end>

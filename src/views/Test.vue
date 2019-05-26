@@ -50,7 +50,7 @@ export default {
   components:{
     ShowTest: () => import('./../components/ShowTest/ShowTest'),
     TestNavigation: ()=> import('./../components/TestNavigation/TestNavigation'),
-    Loader: ()=> import('./../components/CategorieList/CategorieLoader')
+    Loader: ()=> import('./../components/Loader/Loader')
   }
 }
 </script>

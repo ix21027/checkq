@@ -123,7 +123,7 @@ export default {
         box-sizing: border-box;
         color: #fff;
         cursor: pointer;
-        flex-direction: column; 
+        flex-direction: column;
         width: 100%;
         height: 100%;
         input {

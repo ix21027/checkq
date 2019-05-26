@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap justify-center>
     <v-flex md10 sm11>
-        <v-card >
+        <v-card>
           <v-card-title>
             <h3><b>{{currentNumber+1}}. {{currentTest.question}}</b></h3>
           </v-card-title>
@@ -91,7 +91,6 @@ export default {
       'setAnswer',
       'setCountPassed',
       'changeCurrentNumber',
-      'stopTestTime',
       'startToFetchTests'
     ]),
     nextQuestion(){
@@ -101,7 +100,6 @@ export default {
       this.changeCurrentNumber({currentNumber: this.currentNumber-1})
     },
     endTest(){
-      this.stopTestTime()
       // this.startToFetchTests()
     }
   },

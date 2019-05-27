@@ -14,7 +14,7 @@ const testsStore = {
   },
   mutations: {
     successToFetchTests(state, payload) {
-      state.list = payload.testsList;
+      state.list =[...payload.testsList];
       state.currentNumber = 0
       state.fetchStatus = fecthStatus.success;
     },
@@ -50,7 +50,6 @@ const testsStore = {
       commit('setStartTime',{ time: null})
       commit('setEndTime',{ time: null})
       commit('startLoadResource', null, { root: true });
-
       try {
         setTimeout(() => {
           commit('successToFetchTests', { testsList: testsMock });

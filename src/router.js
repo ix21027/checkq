@@ -40,6 +40,10 @@ export default new Router({
       path: '/privacy',
       name: 'privacy',
       component: () => import('./views/Privacy.vue')
+    },
+    {
+      path: '*',
+      component: () => import('./views/NotFound.vue')
     }
   ]
 })

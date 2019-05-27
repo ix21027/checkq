@@ -88,7 +88,7 @@ $dot-radius: 5px;
   .body {
     padding: 0;
     max-height: 0;
-    transition: 0.4s ease-in-out;
+    transition: 0.4s;
     overflow: hidden;
   }
   &.open {
@@ -121,6 +121,12 @@ $dot-radius: 5px;
   border-radius: $dot-radius;
   margin: 0 1px;
   transition: 0.4s;
+  &:nth-child(even){
+    top: 10px;
+  }
+  &:nth-child(odd) {
+    top: 5px;
+  }
 }
 
 </style>

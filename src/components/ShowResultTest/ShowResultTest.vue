@@ -1,36 +1,36 @@
 <template>
-  <v-layout row wrap @click="changeShape" :class="{
-    bord: true,
-    good: correctnes,
-    mist: !correctness,
-    }">
-    <v-flex xs12 pa-3 :class="{
-      bord: !shape,
-      bordTop: shape
-    }">
-      <v-layout row wrap>
-        <v-flex xs11>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est odit nihil neque ad autem excepturi molestias 
-          quo sunt molestiae corporis! Ipsam, accusamus soluta tempore nisi rem iste possimus asperiores. Voluptatum!
-        </v-flex>
-        <v-flex xs1>
-          <v-layout row wrap justify-end>
-            <!-- <v-flex xs1 mr-1><img src="./../../assets/dot.svg"></v-flex> -->
-            <v-flex xs1 mr-1 class="icon"></v-flex>
-            <v-flex xs1 mr-1 class="icon"></v-flex>
-            <v-flex xs1 mr-1 class="icon"></v-flex>
-          </v-layout>
-        </v-flex>
-      </v-layout>
-    </v-flex>
-    <v-flex xs12 pa-3 :class="{
-      close: !shape,
-      open: shape,
-      bordBot: shape,
-    }">
-      lolololololllllllllllllllllllllllllllllllllllllllllll
-    </v-flex>
-  </v-layout>
+  <div
+    :class="{ open, correct }"
+    class="accordion"
+    @click="open = !open"
+  >
+    <div
+      class="head"
+    >
+      <div>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est odit nihil neque ad autem excepturi molestias 
+        quo sunt molestiae corporis! Ipsam, accusamus soluta tempore nisi rem iste possimus asperiores. Voluptatum!
+      </div>
+      <div class="icon">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div
+      class="body"
+    >
+      <ul>
+        <li>lorem</li>
+        <li>lorem</li>
+        <li>lorem</li>
+        <li>lorem</li>
+        <div class="circle check">
+          <div class="dotc"></div>
+        </div>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -39,53 +39,88 @@
 export default {
   data() {
     return {
-      shape: false,// закрытая форма
+      open: false,// закрытая форма
     }
   },
   computed: {
-    correctness(){
+    correct(){
       return true;
     }
-  },
-  methods: {
-    changeShape(){
-      return this.shape = !this.shape
-    }
-  },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.icon{
-  background-image: url('./../../assets/dot.svg');
-  height: 5px;
+
+$dot-radius: 5px;
+.circle {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #444;
+  border-radius: 20px;
+  &.check {
+    .dotc {
+      display: block;
+    }
+  }
+  .dotc {
+    display: none;
+    width: 10px;
+    height: 10px;
+    background: #444;
+    border-radius: 20px;
+  }
 }
-.bordTop{
-  border-radius: 5px 5px 0 0;
+
+.accordion {
+  background: #FFCCCC;
+  border-radius: 2px;
+  line-height: 20px;
+  padding: 15px;
+  .head {
+    display: flex;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .body {
+    padding: 0;
+    max-height: 0;
+    transition: 0.4s ease-in-out;
+    overflow: hidden;
+  }
+  &.open {
+    .body {
+      padding: 20px 0;
+      max-height: 100vh;
+      transition: 1s;
+    }
+    .dot {
+      &:nth-child(even){
+        top: 5px;
+      }
+      &:nth-child(odd) {
+        top: 10px;
+      }
+    }
+  }
 }
-.bord{
-  border-radius: 5px;
-  transition: 0.7s ease;
+.icon {
+  display: flex;
+  height: 20px;
+  position: relative;
 }
-.bordBot{
-  border-radius: 0 0 5px 5px;
+.dot {
+  position: relative;
+  top: 7px;
+  width: $dot-radius;
+  height: $dot-radius;
+  background: #444;
+  border-radius: $dot-radius;
+  margin: 0 1px;
+  transition: 0.4s;
 }
-.good{
-  background: rgb(157, 249, 155);
-}
-.mist{
-  background: rgb(255, 152, 142);
-}
-.close{
-  line-height: 0;
-  height: 0 ;
-  overflow: hidden;
-  zoom: 1;
-  padding: 0 !important;
-  transition: 0.5s ease;
-}
-.open{
-  height: auto;
-  transition: 0.5s ease;
-}
+
 </style>

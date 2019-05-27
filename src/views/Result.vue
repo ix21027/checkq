@@ -28,15 +28,11 @@
           </v-layout>
         </v-flex>
         <v-flex xs12 sm7 lg8>
-          navigation
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum ullam
-          earum dignissimos unde quasi asperiores, cupiditate voluptatem
-          eveniet tempore distinctio, totam natus optio architecto quis! Voluptas
-          perspiciatis molestias molestiae atque.
+          <app-result-navigation></app-result-navigation>
         </v-flex>
       </v-layout>
       <v-layout v-for=" i in 5" :key="i" row wrap my-2>
-        <show-result-test></show-result-test>
+        <app-show-result-test></app-show-result-test>
       </v-layout>
   </v-container>
 </template>
@@ -44,7 +40,8 @@
 <script>
 export default {
   components:{
-    ShowResultTest:()=>import('./../components/ShowResultTest/ShowResultTest'),
+    appShowResultTest: () => import('./../components/ShowResultTest/ShowResultTest'),
+    appResultNavigation: () => import('./../components/ResultNavigation/ResultNavigation')
   }
 }
 </script>

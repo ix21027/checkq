@@ -7,7 +7,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-/* eslint-disable */
+
 export default {
   data() {
     return {

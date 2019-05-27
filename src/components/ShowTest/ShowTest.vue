@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations} from 'vuex';
+import { mapState, mapMutations, mapActions} from 'vuex';
 import letters from './../../constants/lettersForTest'
 
 export default {
@@ -68,10 +68,13 @@ export default {
   ],
   computed: {
     ...mapState([
-      'tests'
+      'tests',
     ]),
     currentTest(){
       return this.tests.list[this.currentNumber]
+    },
+    testStatus(){
+      return this.tests.testStatus
     }
   },
   watch: {
@@ -84,6 +87,11 @@ export default {
       this.setCountPassed({
         count: this.answer.filter(i => i!==null).length
       })
+    },
+    testStatus(){
+      if(this.tests.testStatus){
+        this.$router.push({ path: '/result' })
+      }
     }
   },
   methods: {
@@ -93,6 +101,9 @@ export default {
       'changeCurrentNumber',
       'startToFetchTests'
     ]),
+    ...mapActions([
+      'fetchResult'
+    ]),
     nextQuestion(){
       this.changeCurrentNumber({currentNumber: this.currentNumber+1})
     },
@@ -100,13 +111,13 @@ export default {
       this.changeCurrentNumber({currentNumber: this.currentNumber-1})
     },
     endTest(){
-      // this.startToFetchTests()
+      this.fetchResult()
     }
   },
-  components:{
+  components: {
     Timer: () => import('./../Timer/Timer'),
     Count: () => import('./../Count/Count'),
-  }
+  },
 }
 </script>
 <style scoped>

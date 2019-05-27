@@ -26,7 +26,7 @@ import fetchStatus from './../constants/fetchStatus'
 
 export default {
   created() {
-    if( this.tests.list.length === 0){
+    if( this.tests.list.length === 0 || this.tests.testStatus){
       this.$router.push({ path: '/' })
     }
   },

@@ -1,16 +1,19 @@
 import fecthStatus from '@/constants/fetchStatus'
 import testsMock from '@/mocks/questions'
+import resultTest from '@/mocks/resultTest'
 import Vue from 'vue'
 // import axios from 'axios';
 
 const testsStore = {
   state: {
     list: [],
+    resultList: [],
     currentNumber: 0,
     fetchStatus: fecthStatus.failed,
     countPassed: 0,
     startTime: null,
-    endTime: null
+    endTime: null,
+    testStatus: false, // false если тест пройден.
   },
   mutations: {
     successToFetchTests(state, payload) {
@@ -40,6 +43,12 @@ const testsStore = {
     },
     setEndTime(state,payload){
       state.endTime = payload.time
+    },
+    setTestStatus(state,payload){
+      state.testStatus = payload.status
+    },
+    successToFetchTestResult(state,payload){
+      state.resultList = payload.list
     }
   },
   actions: {
@@ -49,6 +58,7 @@ const testsStore = {
       commit('setCountPassed',{ count: 0})
       commit('setStartTime',{ time: null})
       commit('setEndTime',{ time: null})
+      commit('setTestStatus',{status: false})
       commit('startLoadResource', null, { root: true });
       try {
         setTimeout(() => {
@@ -77,6 +87,19 @@ const testsStore = {
       //   commit('failedToFetchTests', { error })
       // }
     },
+    async fetchResult({commit}){
+      commit('startLoadResource', null, { root: true });
+      try {
+        setTimeout(() => {
+          commit('successToFetchTestResult', { list: resultTest });
+          commit('stopLoadResource', null, { root: true });
+          commit('setTestStatus', { status: true })
+        }, 2000)
+      } catch (error) {
+        // console.log(error);
+        commit('errorOccured', { error }, { root: true });
+      }
+    }
   }
 };
 export default testsStore;

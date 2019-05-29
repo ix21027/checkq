@@ -4,6 +4,7 @@
       open,
       correct: correct() }"
     class="accordion"
+    :id="item.id"
   >
     <div
       class="head"

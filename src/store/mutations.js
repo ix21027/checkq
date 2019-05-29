@@ -4,13 +4,16 @@ export default {
   },
   startLoadResource(state) {
     state.loading = true;
+    state.loadingCount += 1;
   },
   stopLoadResource(state) {
-    state.loading = false;
+    state.loadingCount -= state.loadingCount <= 0 ? 0 : 1;
+    if (state.loadingCount === 0) {
+      state.loading = false;
+    }
   },
   errorOccured(state, payload) {
     // console.log('error', payload.error);
-    
     state.errors = [...state.errors, payload.error];
   }
 }

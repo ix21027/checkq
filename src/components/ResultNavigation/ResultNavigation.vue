@@ -1,7 +1,17 @@
 <template>
   <div>
     <div class="place" v-for="(item, index) in resultList" :key="item.id">
-      <v-btn class="cell" @click="clickToNavigation(index)" :color="colors(index)" depressed fab small>{{index+1}}</v-btn>
+      <v-btn
+        :to="`#${item.id}`"
+        class="cell"
+        @click.native="scrollFix(`#${item.id}`)"
+        :color="colors(index)"
+        depressed
+        fab
+        small
+      >
+        {{index+1}}
+      </v-btn>
     </div>
   </div>
 </template>
@@ -13,8 +23,13 @@ export default {
     colors(index){
       return this.resultList[index].answer === this.resultList[index].server_answer ? "#9DF99B" : "#FFCCCC"
     },
-    clickToNavigation(index){
-      console.log(index)
+    // clickToNavigation(index){
+    //   // console.log(index);
+    // },
+    scrollFix: function(hashbang)
+    {
+      location.href = hashbang;
+      window.scroll(window.scrollX, window.scrollY - 70);
     }
   },
 }

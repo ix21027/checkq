@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout mb-5>
     <v-flex>
       <app-show-result-item
         v-for="(item,index) in resultList"

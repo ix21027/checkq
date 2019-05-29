@@ -1,12 +1,18 @@
 <template>
   <v-layout>
-    <app-with-formula>Політика конфеденційності $2^2\copy$</app-with-formula>
+    <v-text-field v-model="input"/>
+    <app-with-formula v-model="input"/>
   </v-layout>
 </template>
 
 <script>
 import WithFormulaVue from '../components/WithFormula/WithFormula.vue';
 export default {
+  data() {
+    return {
+      input: '',
+    }
+  },
   components: {
     appWithFormula: WithFormulaVue
   }

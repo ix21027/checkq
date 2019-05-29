@@ -42,7 +42,7 @@
                 <v-flex xs6 sm8 md8 >
                   <v-spacer></v-spacer>
                 </v-flex>
-                <timer v-if="!testStatus"></timer>
+                <timer :initTime="initTime"></timer>
                 <count></count>
               </v-layout>
             </v-layout>
@@ -60,7 +60,8 @@ export default {
   data() {
     return {
       letters:letters,
-      answer:[]
+      initTime:0,
+      answer:[],
     }
   },
   props:[
@@ -99,7 +100,8 @@ export default {
       'setAnswer',
       'setCountPassed',
       'changeCurrentNumber',
-      'startToFetchTests'
+      'startToFetchTests',
+      'setStartTime'
     ]),
     ...mapActions([
       'fetchResult'
@@ -112,6 +114,14 @@ export default {
     },
     endTest(){
       this.fetchResult()
+    }
+  },
+  created() {
+    if( this.tests.startTime === null){
+      this.initTime = new Date().getTime();
+      this.setStartTime({ time: this.initTime })
+    } else {
+      this.initTime = this.tests.startTime
     }
   },
   components: {

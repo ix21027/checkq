@@ -1,6 +1,7 @@
 import fecthStatus from '@/constants/fetchStatus'
 import testsMock from '@/mocks/questions'
 import resultTest from '@/mocks/resultTest'
+import { formatTime } from '@/utils'
 import Vue from 'vue'
 // import axios from 'axios';
 
@@ -99,9 +100,13 @@ const testsStore = {
         setTimeout(() => {
           commit('successToFetchTestResult', { list: resultTest });
           commit('stopLoadResource', null, { root: true });
-          commit('setTestStatus', { status: true })
+          commit('setTestStatus', { status: true });
+          commit('setEndTime', { time: new Date().getTime()})
+          commit('setStringTime', { time: formatTime(state.endTime - state.startTime)})
 
           const parsed = JSON.stringify(state.list)
+          const t = JSON.stringify(state.stringTime)
+          localStorage.setItem('testTime',t)
           localStorage.setItem('testResult', parsed)
         }, 2000)
       } catch (error) {

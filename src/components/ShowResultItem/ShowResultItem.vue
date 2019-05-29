@@ -1,6 +1,8 @@
 <template>
   <div
-    :class="{ open, correct }"
+    :class="{
+      open,
+      correct: correct() }"
     class="accordion"
   >
     <div
@@ -8,8 +10,7 @@
       @click="open = !open"
     >
       <div>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est odit nihil neque ad autem excepturi molestias
-        quo sunt molestiae corporis! Ipsam, accusamus soluta tempore nisi rem iste possimus asperiores. Voluptatum!
+        {{index+1}}. {{item.question}}
       </div>
       <div class="icon">
         <div class="dot"></div>
@@ -20,28 +21,37 @@
     <div
       class="body"
     >
-      <div v-for=" i in 4" :key="i" class="option">
-        <div class="circle check">
-          <div class="dotc"></div>
+      <div v-for="(i,count) in item.options" :key="i.id" class="option">
+        <div>
+          <div class="circle" :class="{ check: item.answer === i.id}">
+            <div class="dotc"></div>
+          </div>
         </div>
         <div class="option-text">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde aut similique omnis ad velit nemo corporis numquam reiciendis amet fugiat veniam doloremque, ducimus soluta facere qui nobis nulla, sed magnam!
+          {{letters[count]}}. {{i.title}}
         </div>
+      </div>
+      <div v-if="!correct()" class="true-answer">
+        Правильна відповідь: {{letters[item.options.findIndex((i)=> i.id === item.server_answer)]}}.
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import letters from './../../constants/lettersForTest'
+
 export default {
   data() {
     return {
-      open: false,// закрытая форма
+      letters:letters,
+      open: !this.correct(),
     }
   },
-  computed: {
+  props:[ 'item', 'index'],
+  methods: {
     correct(){
-      return true;
+      return this.item.answer === this.item.server_answer
     }
   }
 }
@@ -51,6 +61,9 @@ export default {
 <style lang="scss" scoped>
 
 $dot-radius: 5px;
+.true-answer{
+  margin: 5px 0 0 10px;
+}
 .option{
   display: flex;
   position: relative;
@@ -59,7 +72,9 @@ $dot-radius: 5px;
     width: 95%;
   }
   .circle {
-    margin: 10px;
+    position: relative;
+    top: 50%;
+    margin: -10px 10px;
     width: 20px;
     height: 20px;
     display: flex;
@@ -83,6 +98,8 @@ $dot-radius: 5px;
 }
 .accordion {
   background: #FFCCCC;
+  position: relative;
+  margin: 10px 0;
   &.correct {
     background: #9DF99B;
   }
@@ -92,6 +109,7 @@ $dot-radius: 5px;
   .head {
     display: flex;
     font-weight: bold;
+    justify-content: space-between;
     cursor: pointer;
   }
   .body {

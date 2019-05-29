@@ -42,7 +42,7 @@
                 <v-flex xs6 sm8 md8 >
                   <v-spacer></v-spacer>
                 </v-flex>
-                <timer></timer>
+                <timer v-if="!testStatus"></timer>
                 <count></count>
               </v-layout>
             </v-layout>

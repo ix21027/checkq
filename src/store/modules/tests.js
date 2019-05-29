@@ -7,12 +7,12 @@ import Vue from 'vue'
 const testsStore = {
   state: {
     list: [],
-    resultList: [],
     currentNumber: 0,
     fetchStatus: fecthStatus.failed,
     countPassed: 0,
     startTime: null,
     endTime: null,
+    stringTime: '',
     testStatus: false, // false если тест пройден.
   },
   mutations: {
@@ -27,28 +27,35 @@ const testsStore = {
     failToFetchTests(state) {
       state.fetchStatus = fecthStatus.failed;
     },
-    changeCurrentNumber(state,payload){
+    changeCurrentNumber(state, payload){
       if(payload.currentNumber < state.list.length && payload.currentNumber >= 0){
         state.currentNumber = payload.currentNumber
       }
     },
-    setAnswer(state,payload){
+    setAnswer(state, payload){
       Vue.set(state.list,payload.index,{...state.list[payload.index], answer:payload.answer })
     },
-    setCountPassed(state,payload){
+    setCountPassed(state, payload){
       state.countPassed = payload.count;
     },
-    setStartTime(state,payload){
+    setStartTime(state, payload){
       state.startTime = payload.time
     },
-    setEndTime(state,payload){
+    setEndTime(state, payload){
       state.endTime = payload.time
     },
-    setTestStatus(state,payload){
+    setStringTime(state, payload){
+      state.stringTime = payload.time
+    },
+    setTestStatus(state, payload){
       state.testStatus = payload.status
     },
-    successToFetchTestResult(state,payload){
-      state.resultList = payload.list
+    successToFetchTestResult(state, payload){
+      //сращиваем два массива в один и записываем его в list
+      state.list = [...state.list.map((i)=>{
+        i.server_answer = payload.list.find((item) => item.id === i.id).id_answer
+        return i
+      })]
     }
   },
   actions: {
@@ -70,7 +77,6 @@ const testsStore = {
         commit('errorOccured', { error }, { root: true });
       }
 
-
       // const headers = {
       //   'Content-type': 'application/json',
       //   'Accept': 'application/json'
@@ -87,13 +93,16 @@ const testsStore = {
       //   commit('failedToFetchTests', { error })
       // }
     },
-    async fetchResult({commit}){
+    async fetchResult({commit, state}){
       commit('startLoadResource', null, { root: true });
       try {
         setTimeout(() => {
           commit('successToFetchTestResult', { list: resultTest });
           commit('stopLoadResource', null, { root: true });
           commit('setTestStatus', { status: true })
+
+          const parsed = JSON.stringify(state.list)
+          localStorage.setItem('testResult', parsed)
         }, 2000)
       } catch (error) {
         // console.log(error);

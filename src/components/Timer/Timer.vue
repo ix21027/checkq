@@ -24,8 +24,9 @@ export default {
   },
   methods: {
     ...mapMutations([
+      'setStartTime',
       'setEndTime',
-      'setStartTime'
+      'setStringTime'
     ]),
     display: function (ms){
       var seconds = Math.floor(ms/1000)
@@ -38,6 +39,7 @@ export default {
       str+=':'
       str += ( seconds === 0 ) ? '00' : ((seconds < 10 && seconds > 0 ) ? '0'+seconds : seconds)
       this.time = str
+      return str
     }
   },
   created() {
@@ -55,8 +57,11 @@ export default {
     },1000)
 
   },
-  beforeDestroy() {
+  destroyed() {
     this.setEndTime({ time: new Date().getTime() })
+    const t = this.display(this.tests.endTime - this.tests.startTime)
+    this.setStringTime({ time: t })
+    localStorage.setItem('testTime',JSON.stringify(t))
     clearInterval( this.timerId )
   },
 }

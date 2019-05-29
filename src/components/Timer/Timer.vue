@@ -7,6 +7,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+import { formatTime } from '@/utils'
 
 export default {
   data() {
@@ -28,19 +29,7 @@ export default {
       'setEndTime',
       'setStringTime'
     ]),
-    display: function (ms){
-      var seconds = Math.floor(ms/1000)
-      var minutes = Math.floor(seconds/60)
-      var hours = Math.floor(minutes/60)
-      seconds %= 60
-      minutes %= 60
-      var str =''+(hours > 0? hours+':':'')
-      str += ( minutes === 0) ? '00' : ((minutes < 10 && minutes > 0 ) ?'0'+minutes : minutes)
-      str+=':'
-      str += ( seconds === 0 ) ? '00' : ((seconds < 10 && seconds > 0 ) ? '0'+seconds : seconds)
-      this.time = str
-      return str
-    }
+    display: formatTime,
   },
   created() {
     if( this.tests.startTime === null){
@@ -53,8 +42,8 @@ export default {
   mounted() {
     this.timerId = setInterval(() => {
       var diff = new Date().getTime() - this.initTime
-      this.display(diff)
-    },1000)
+      this.time = this.display(diff)
+    }, 1000)
 
   },
   destroyed() {

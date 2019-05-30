@@ -37,7 +37,6 @@ export default {
     left: 0;;
     top: -15px;
     z-index: 2;
-    pointer-events: none;
     background: rgba($color: #000000, $alpha: 0.3);
   }
 </style>

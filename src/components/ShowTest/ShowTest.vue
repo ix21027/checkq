@@ -42,7 +42,7 @@
                 <v-flex xs6 sm8 md8 >
                   <v-spacer></v-spacer>
                 </v-flex>
-                <timer></timer>
+                <timer :initTime="initTime"></timer>
                 <count></count>
               </v-layout>
             </v-layout>
@@ -53,14 +53,15 @@
 </template>
 
 <script>
-import { mapState, mapMutations} from 'vuex';
+import { mapState, mapMutations, mapActions} from 'vuex';
 import letters from './../../constants/lettersForTest'
 
 export default {
   data() {
     return {
       letters:letters,
-      answer:[]
+      initTime:0,
+      answer:[],
     }
   },
   props:[
@@ -68,10 +69,13 @@ export default {
   ],
   computed: {
     ...mapState([
-      'tests'
+      'tests',
     ]),
     currentTest(){
       return this.tests.list[this.currentNumber]
+    },
+    testStatus(){
+      return this.tests.testStatus
     }
   },
   watch: {
@@ -84,6 +88,11 @@ export default {
       this.setCountPassed({
         count: this.answer.filter(i => i!==null).length
       })
+    },
+    testStatus(){
+      if(this.tests.testStatus){
+        this.$router.push({ path: '/result' })
+      }
     }
   },
   methods: {
@@ -91,7 +100,11 @@ export default {
       'setAnswer',
       'setCountPassed',
       'changeCurrentNumber',
-      'startToFetchTests'
+      'startToFetchTests',
+      'setStartTime'
+    ]),
+    ...mapActions([
+      'fetchResult'
     ]),
     nextQuestion(){
       this.changeCurrentNumber({currentNumber: this.currentNumber+1})
@@ -100,13 +113,21 @@ export default {
       this.changeCurrentNumber({currentNumber: this.currentNumber-1})
     },
     endTest(){
-      // this.startToFetchTests()
+      this.fetchResult()
     }
   },
-  components:{
+  created() {
+    if( this.tests.startTime === null){
+      this.initTime = new Date().getTime();
+      this.setStartTime({ time: this.initTime })
+    } else {
+      this.initTime = this.tests.startTime
+    }
+  },
+  components: {
     Timer: () => import('./../Timer/Timer'),
     Count: () => import('./../Count/Count'),
-  }
+  },
 }
 </script>
 <style scoped>

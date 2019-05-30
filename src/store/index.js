@@ -6,7 +6,6 @@ import actions from './actions'
 import getters from './getters'
 import state from './state'
 
-import counter from './modules/counter'
 import categories from './modules/categories'
 import tests from './modules/tests'
 
@@ -18,7 +17,6 @@ export default new Vuex.Store({
   mutations,
   actions,
   modules: {
-    counter,
     categories,
     tests
   }

@@ -22,8 +22,8 @@ const categoriesStore = {
   },
   actions: {
     async fetchCategories({ commit }) {
-      commit('startToFetchCategories');
       commit('startLoadResource', null, { root: true });
+      commit('startToFetchCategories');
 
       const headers = {
         'Content-type': 'application/json',
@@ -34,6 +34,11 @@ const categoriesStore = {
         const data = await axios.get('https://checkq-api.herokuapp.com/api/subjects', {
           headers
         });
+        // FIXME: delete all mocks data
+
+        // const data = {
+        //   data: catogoriesMock
+        // }
         commit('successToFetchCategories', { categoriesList: data.data});
         commit('stopLoadResource', null, { root: true });
       } catch (error) {

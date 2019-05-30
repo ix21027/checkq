@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import CategorieLoader from './CategorieLoader.vue';
 
 export default {
   data: () => {
@@ -68,9 +67,6 @@ export default {
       this.$emit('input', this.selectedCategories);
     }
   },
-  components: {
-    appCategorieLoader: CategorieLoader,
-  }
 }
 </script>
 
@@ -83,6 +79,7 @@ export default {
     margin: 10px;
     img {
       width: 100%;
+      min-height: 100%;
       position: absolute;
       top: 0;
     }

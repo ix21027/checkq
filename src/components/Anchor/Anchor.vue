@@ -1,22 +1,27 @@
 <template>
   <div class="anchor">
+    <v-icon size='50' @click="upper" color="primary">keyboard_arrow_up</v-icon>
   </div>
 </template>
 
 <script>
 export default {
-  
+  methods: {
+    upper(){
+      window.scroll(0, 0);
+    },
+  },
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+$width-height: 50px;
 .anchor{
   position: fixed;
-  width: 40px;
-  height: 40px;
-  background: red;
+  width: $width-height;
+  height: $width-height;
   z-index: 10;
-  margin: -40px -40px;
+  margin: -$width-height/2 -$width-height/2;
   left: 95%;
   top: 95%;
 }

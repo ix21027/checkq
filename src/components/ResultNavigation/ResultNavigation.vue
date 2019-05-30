@@ -23,9 +23,6 @@ export default {
     colors(index){
       return this.resultList[index].answer === this.resultList[index].server_answer ? "#9DF99B" : "#FFCCCC"
     },
-    // clickToNavigation(index){
-    //   // console.log(index);
-    // },
     scrollFix: function(hashbang)
     {
       location.href = hashbang;

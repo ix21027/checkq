@@ -7,6 +7,7 @@
 
 <script>
 import WithFormulaVue from '../components/WithFormula/WithFormula.vue';
+
 export default {
   data() {
     return {
@@ -18,7 +19,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

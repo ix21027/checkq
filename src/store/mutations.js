@@ -9,8 +9,6 @@ export default {
     state.loading = false;
   },
   errorOccured(state, payload) {
-    // console.log('error', payload.error);
-
     state.errors = [...state.errors, payload.error];
   }
 }

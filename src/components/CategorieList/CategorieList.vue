@@ -77,8 +77,10 @@ export default {
     overflow: hidden;
     position: relative;
     margin: 10px;
+    display: flex;
+    justify-content: center;
     img {
-      width: 100%;
+      min-width: 100%;
       min-height: 100%;
       position: absolute;
       top: 0;

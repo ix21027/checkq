@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -71,16 +73,42 @@ export default {
     }
   },
   methods: {
-    submit() {
+    ...mapMutations([
+      'startLoadResource',
+      'stopLoadResource',
+      'errorOccured'
+    ]),
+    async submit() {
       this.validate();
       if (this.valid) {
+        // eslint-disable-next-line
+        // eqeeqw@eqw.com
         const data = {
           email: this.email,
           password: this.password,
         }
+        const jsonData = JSON.stringify({session: data});
+        const headers = {
+          'Content-type': 'application/json',
+          'Accept': 'application/json'
+        }
 
-        // eslint-disable-next-line
-        console.log({user: data});
+        // const response = await this.$http.plain('/api/session', jsonData);
+        try {
+          const response = await axios({
+            url: 'https://checkq-api.herokuapp.com/api/session',
+            method: 'POST',
+            headers,
+            data: jsonData,
+            }
+          );
+          console.log(response);
+          this.stopLoadResource();
+        } catch(err) {
+          console.error(err);
+          this.errorOccured({ error: err });
+          this.stopLoadResource();
+        }
       }
     },
     validate () {

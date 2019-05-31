@@ -13,6 +13,7 @@ export default {
     }
   },
   errorOccured(state, payload) {
+    console.log(payload);
     state.errors = [...state.errors, payload.error];
   }
 }

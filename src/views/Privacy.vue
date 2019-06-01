@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-text-field v-model="input"/>
-    <app-with-formula v-model="input"/>
+    <app-with-formula :expression="input"/>
   </v-layout>
 </template>
 

@@ -11,7 +11,6 @@ export default {
       window.scroll(0, 0);
     },
     handleScroll: function (evt, el) {
-      console.log(window.scrollY)
       if (window.scrollY > 200) {
         el.setAttribute(
           'scrollActive',''

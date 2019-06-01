@@ -11,14 +11,13 @@ import 'katex/dist/katex.min.css';
 export default {
   props: [
     'expression',
-    'value'
   ],
   computed: {
     expressionHtml() {
-      const arr = this.value.split('$');
+      const arr = this.expression.split('$') || '';
       let html = '';
       for (let i = 0; i < arr.length ; i +=2 ) {
-        html += `<span>${arr[i]}</span> ${Katex.renderToString(arr[i+1] || '', {
+        html += `<span>${arr[i] || ''}</span> ${Katex.renderToString(arr[i+1] || '', {
           throwOnError: false,
         })}`
       }

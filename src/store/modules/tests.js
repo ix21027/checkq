@@ -1,7 +1,6 @@
 import fecthStatus from '@/constants/fetchStatus'
-import testsMock from '@/mocks/questions'
 import resultTest from '@/mocks/resultTest'
-import { formatTime } from '@/utils'
+import { formatTime, shuffle } from '@/utils'
 import Vue from 'vue'
 import axios from 'axios';
 
@@ -61,7 +60,7 @@ const testsStore = {
   },
   actions: {
     async fetchTests({ commit }, payload) {
-      console.log(payload);
+      // TODO: refactor, one mutation
 
       commit('startToFetchTests');
       commit('changeCurrentNumber',{ currentNumber: 0})
@@ -70,31 +69,36 @@ const testsStore = {
       commit('setEndTime',{ time: null})
       commit('setTestStatus',{status: false})
       commit('startLoadResource', null, { root: true });
+
       try {
         const headers = {
           'Content-type': 'application/json',
           'Accept': 'application/json'
         }
 
-        const requestData = {
+        const requestData = JSON.stringify({test: {
           subject_ids: payload.categories,
           question_count: payload.testCount
-        };
+        }});
 
-        console.log(requestData);
+        const response = await axios({
+            url: 'https://checkq-api.herokuapp.com/api/test',
+            method: 'POST',
+            headers,
+            data: requestData,
+          }
+        );
 
-        const data = await axios.post('https://checkq-api.herokuapp.com/api/test', {
-          headers,
-          data: JSON.stringify(requestData),
-        });
+        let testsList = response.data.map(t => ({  ...t, options: shuffle(t.options) }));
+        testsList = shuffle(testsList);
 
-        console.log(data);
-        commit('successToFetchTests', { testsList: testsMock });
+        commit('successToFetchTests', { testsList });
         commit('stopLoadResource', null, { root: true });
       } catch (error) {
         commit('errorOccured', { error }, { root: true });
       }
     },
+
     async fetchResult({commit, state}){
       commit('startLoadResource', null, { root: true });
       try {

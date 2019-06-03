@@ -1,9 +1,6 @@
 <template>
   <v-container grid-list-xl text-xs-center>
     <div>
-      <v-layout row wrap justify-center>
-        <h2>TECT</h2>
-      </v-layout>
       <show-test
         :currentNumber='tests.currentNumber'
         ></show-test>

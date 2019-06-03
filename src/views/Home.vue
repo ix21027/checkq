@@ -50,7 +50,7 @@ export default {
       }
     },
     startTest() {
-      this.fetchTests();
+      this.fetchTests({categories: this.selectedCategories, testCount: this.testNumber});
     }
   },
   computed: {

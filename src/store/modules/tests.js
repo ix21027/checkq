@@ -3,7 +3,7 @@ import testsMock from '@/mocks/questions'
 import resultTest from '@/mocks/resultTest'
 import { formatTime } from '@/utils'
 import Vue from 'vue'
-// import axios from 'axios';
+import axios from 'axios';
 
 const testsStore = {
   state: {
@@ -60,7 +60,9 @@ const testsStore = {
     }
   },
   actions: {
-    async fetchTests({ commit }) {
+    async fetchTests({ commit }, payload) {
+      console.log(payload);
+
       commit('startToFetchTests');
       commit('changeCurrentNumber',{ currentNumber: 0})
       commit('setCountPassed',{ count: 0})
@@ -69,30 +71,29 @@ const testsStore = {
       commit('setTestStatus',{status: false})
       commit('startLoadResource', null, { root: true });
       try {
-        setTimeout(() => {
-          commit('successToFetchTests', { testsList: testsMock });
-          commit('stopLoadResource', null, { root: true });
-        }, 2000)
+        const headers = {
+          'Content-type': 'application/json',
+          'Accept': 'application/json'
+        }
+
+        const requestData = {
+          subject_ids: payload.categories,
+          question_count: payload.testCount
+        };
+
+        console.log(requestData);
+
+        const data = await axios.post('https://checkq-api.herokuapp.com/api/test', {
+          headers,
+          data: JSON.stringify(requestData),
+        });
+
+        console.log(data);
+        commit('successToFetchTests', { testsList: testsMock });
+        commit('stopLoadResource', null, { root: true });
       } catch (error) {
-        // console.log(error);
         commit('errorOccured', { error }, { root: true });
       }
-
-      // const headers = {
-      //   'Content-type': 'application/json',
-      //   'Accept': 'application/json'
-      // }
-
-      // try {
-      //   const data = await axios.get('https://checkq-api.herokuapp.com/api/subjects', {
-      //     headers
-      //   });
-      //   commit('successToFetchTests', {
-      //     testsList: data.data,
-      //   })
-      // } catch (error) {
-      //   commit('failedToFetchTests', { error })
-      // }
     },
     async fetchResult({commit, state}){
       commit('startLoadResource', null, { root: true });

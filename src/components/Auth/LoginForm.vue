@@ -52,8 +52,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { mapMutations } from 'vuex'
+import {  mapActions, mapState } from 'vuex'
 
 export default {
   data() {
@@ -73,42 +72,12 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([
-      'startLoadResource',
-      'stopLoadResource',
-      'errorOccured'
-    ]),
+    ...mapActions(['authorization']),
     async submit() {
       this.validate();
       if (this.valid) {
-        // eslint-disable-next-line
-        // eqeeqw@eqw.com
-        const data = {
-          email: this.email,
-          password: this.password,
-        }
-        const jsonData = JSON.stringify({session: data});
-        const headers = {
-          'Content-type': 'application/json',
-          'Accept': 'application/json'
-        }
-
-        // const response = await this.$http.plain('/api/session', jsonData);
-        try {
-          const response = await axios({
-            url: 'https://checkq-api.herokuapp.com/api/session',
-            method: 'POST',
-            headers,
-            data: jsonData,
-            }
-          );
-          console.log(response);
-          this.stopLoadResource();
-        } catch(err) {
-          console.error(err);
-          this.errorOccured({ error: err });
-          this.stopLoadResource();
-        }
+        const { email, password } = this;
+        this.authorization({ email, password });
       }
     },
     validate () {
@@ -118,6 +87,25 @@ export default {
         this.valid = false;
       }
     },
+  },
+  computed: {
+    ...mapState({
+      userAuth(state) {
+        return state.user.isAuth;
+      }
+    })
+  },
+  watch: {
+    userAuth(value) {
+      if (value) {
+        this.$router.push('/');
+      }
+    }
+  },
+  created() {
+    if (this.userAuth) {
+      this.$router.push('/');
+    }
   }
 }
 </script>

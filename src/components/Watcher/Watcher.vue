@@ -1,15 +1,13 @@
 <template>
   <div class="watcher">
           <!-- {{errors}} -->
-    <div class="loader" v-if="loading">
+    <div class="loader" v-if="loading || loader.length !== 0">
       <v-progress-linear
         indeterminate
-        color="blue"
+        color="#FFB951"
         :height="5"
       />
-
     </div>
-
     <div class="error-log">
       <div class="error-item" v-for='(error, i) in errors' :key='i'>{{error}}</div>
     </div>
@@ -25,6 +23,7 @@ export default {
   computed: {
     ...mapState([
       'loading',
+      'loader',
       'errors',
     ]),
   }
@@ -32,6 +31,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/colors.scss';
+
   .loader {
     position: fixed;
     width: 100vw;
@@ -48,7 +49,7 @@ export default {
     bottom: 0;
     padding: 10px;
     .error-item {
-      background: rgba(255, 78, 78, 0.356);
+      background: rgba($red, 0.9);
       padding: 10px;
       border-radius: 2px;
       font-weight: bold;

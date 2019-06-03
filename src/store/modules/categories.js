@@ -1,6 +1,5 @@
 import fecthStatus from '@/constants/fetchStatus'
-// import catogoriesMock from '@/mocks/categories'
-import axios from 'axios';
+import { http } from '@/fetchapi';
 
 const categoriesStore = {
   state: {
@@ -8,9 +7,10 @@ const categoriesStore = {
     selectedCategories: [],
     fetchStatus: fecthStatus.failed,
   },
+
   mutations: {
     successToFetchCategories(state, payload) {
-      state.list = payload.categoriesList;
+      state.list = payload.categories;
       state.fetchStatus = fecthStatus.success;
     },
     startToFetchCategories(state) {
@@ -20,30 +20,21 @@ const categoriesStore = {
       state.fetchStatus = fecthStatus.fail;
     }
   },
+
   actions: {
     async fetchCategories({ commit }) {
-      commit('startLoadResource', null, { root: true });
+      const ctx = { title: 'categories' };
+
+      commit('startLoading', ctx, { root: true });
       commit('startToFetchCategories');
-
-      const headers = {
-        'Content-type': 'application/json',
-        'Accept': 'application/json'
-      }
-
       try {
-        const data = await axios.get('https://checkq-api.herokuapp.com/api/subjects', {
-          headers
-        });
-        // FIXME: delete all mocks data
+        const response = await http.get('subjects');
 
-        // const data = {
-        //   data: catogoriesMock
-        // }
-        commit('successToFetchCategories', { categoriesList: data.data});
-        commit('stopLoadResource', null, { root: true });
+        commit('successToFetchCategories', { categories: response.data});
       } catch (error) {
         commit('failToFetchCategories', { error });
-        commit('stopLoadResource', null, { root: true });
+      } finally {
+        commit('stopLoading', ctx, { root: true });
       }
     }
   }

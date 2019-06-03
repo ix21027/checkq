@@ -77,9 +77,7 @@
 </template>
 
 <script>
-// import validateConfig from '@/config/validation'
-import axios from 'axios'
-import { mapMutations } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   data() {
@@ -111,46 +109,18 @@ export default {
   },
   methods: 
   {
-    ...mapMutations([
-      'startLoadResource',
-      'stopLoadResource',
-      'errorOccured'
+    ...mapActions([
+      'registration',
     ]),
     async submit() {
-      this.startLoadResource();
       this.validate();
       if (this.valid) {
-        const data = {
+        this.registration({
           username: this.username,
           email: this.email,
           password: this.password,
           password_confirmation: this.confirm,
-        }
-        const jsonData = JSON.stringify({user: data});
-        const headers = {
-          'Content-type': 'application/json',
-          'Accept': 'application/json'
-        }
-
-        // const response = await this.$http.plain('/api/session', jsonData);
-        try {
-          const response = await axios({
-            url: 'https://checkq-api.herokuapp.com/api/profile',
-            method: 'POST',
-            headers,
-            data: jsonData,
-            }
-          );
-          console.log(response);
-          this.stopLoadResource();
-        } catch(err) {
-          console.error(err);
-          this.errorOccured({ error: err });
-          this.stopLoadResource();
-        }
-
-        // eslint-disable-next-line
-        // console.log(response);
+        });
       }
     },
     validate () {
@@ -160,6 +130,20 @@ export default {
         this.valid = false;
       }
     },
+  },
+  computed: {
+    ...mapState({
+      isRegister(state) {
+        return state.user.isRegister;
+      },
+    })
+  },
+  watch: {
+    isRegister(value) {
+      if (value) {
+        this.$router.push('/login');
+      }
+    }
   }
 }
 </script>

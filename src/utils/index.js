@@ -10,3 +10,16 @@ export function formatTime (ms) {
   str += (seconds === 0) ? '00' : ((seconds < 10 && seconds > 0) ? '0' + seconds : seconds)
   return str
 }
+
+
+export function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}

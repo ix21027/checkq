@@ -2,17 +2,31 @@
   <v-layout row wrap justify-center>
     <v-flex md10 sm11>
         <v-card>
-          <v-card-title>
-            <h3><b>{{currentNumber+1}}. {{currentTest.question}}</b></h3>
+          <v-card-title class='question-title'>
+            <div class="circle-question">
+              {{currentNumber+1}}
+            </div>
+            <div class="question-text">
+              <app-katex :expression='`${currentTest.question}`'>
+            </app-katex></div>
           </v-card-title>
-          <v-card-text>
+          <v-card-text class='question-body'>
             <v-radio-group v-model="answer[currentNumber]">
-              <v-radio
-                v-for="(n,i) in currentTest.options"
+              <label
+                class="answer"
+                v-for="(n, i) in currentTest.options"
                 :key="n.id"
-                :label="letters[i]+'.  '+n.title"
-                :value="n.id"
-              ></v-radio>
+              >
+                <v-radio
+                  :label="letters[i]"
+                  :value="n.id"
+                  mt-2
+                >
+                </v-radio>
+                <div class="answer-option">
+                  <app-katex :expression='n.title'></app-katex>
+                </div>
+              </label>
             </v-radio-group>
           </v-card-text>
           <v-card-actions>
@@ -127,8 +141,53 @@ export default {
   components: {
     Timer: () => import('./../Timer/Timer'),
     Count: () => import('./../Count/Count'),
+    appKatex: () => import('@/components/WithFormula/WithFormula')
   },
 }
 </script>
 <style scoped>
+  .question-title {
+    padding: 1.3em;
+    padding-bottom: 0;
+    font-weight: 500;
+    font-size: 1.2em;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .question-text {
+    width: calc(100% - 60px);
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  .answer {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    cursor: pointer;
+  }
+
+  .answer-option {
+    margin-bottom: 8px;
+    font-size: 12pt;
+  }
+
+  .question-body {
+    margin-left: 10px;
+  }
+
+  .circle-question {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: #4CAF50;
+    border-radius: 50px;
+    margin-right: 10px;
+  }
 </style>

@@ -1,9 +1,8 @@
 import fecthStatus from '@/constants/fetchStatus'
-import testsMock from '@/mocks/questions'
 import resultTest from '@/mocks/resultTest'
-import { formatTime } from '@/utils'
+import { formatTime, shuffle } from '@/utils'
 import Vue from 'vue'
-// import axios from 'axios';
+import axios from 'axios';
 
 const testsStore = {
   state: {
@@ -60,7 +59,9 @@ const testsStore = {
     }
   },
   actions: {
-    async fetchTests({ commit }) {
+    async fetchTests({ commit }, payload) {
+      // TODO: refactor, one mutation
+
       commit('startToFetchTests');
       commit('changeCurrentNumber',{ currentNumber: 0})
       commit('setCountPassed',{ count: 0})
@@ -68,32 +69,36 @@ const testsStore = {
       commit('setEndTime',{ time: null})
       commit('setTestStatus',{status: false})
       commit('startLoadResource', null, { root: true });
+
       try {
-        setTimeout(() => {
-          commit('successToFetchTests', { testsList: testsMock });
-          commit('stopLoadResource', null, { root: true });
-        }, 2000)
+        const headers = {
+          'Content-type': 'application/json',
+          'Accept': 'application/json'
+        }
+
+        const requestData = JSON.stringify({test: {
+          subject_ids: payload.categories,
+          question_count: payload.testCount
+        }});
+
+        const response = await axios({
+            url: 'https://checkq-api.herokuapp.com/api/test',
+            method: 'POST',
+            headers,
+            data: requestData,
+          }
+        );
+
+        let testsList = response.data.map(t => ({  ...t, options: shuffle(t.options) }));
+        testsList = shuffle(testsList);
+
+        commit('successToFetchTests', { testsList });
+        commit('stopLoadResource', null, { root: true });
       } catch (error) {
-        // console.log(error);
         commit('errorOccured', { error }, { root: true });
       }
-
-      // const headers = {
-      //   'Content-type': 'application/json',
-      //   'Accept': 'application/json'
-      // }
-
-      // try {
-      //   const data = await axios.get('https://checkq-api.herokuapp.com/api/subjects', {
-      //     headers
-      //   });
-      //   commit('successToFetchTests', {
-      //     testsList: data.data,
-      //   })
-      // } catch (error) {
-      //   commit('failedToFetchTests', { error })
-      // }
     },
+
     async fetchResult({commit, state}){
       commit('startLoadResource', null, { root: true });
       try {

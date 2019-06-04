@@ -1,6 +1,7 @@
 export default {
   users: [],
-  loading: true,
+  loading: false,
   loadingCount: 0,
   errors: [],
+  loader: []
 }

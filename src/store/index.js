@@ -8,6 +8,7 @@ import state from './state'
 
 import categories from './modules/categories'
 import tests from './modules/tests'
+import user from './modules/user'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
   actions,
   modules: {
     categories,
-    tests
+    tests,
+    user
   }
 })

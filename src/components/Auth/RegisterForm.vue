@@ -77,7 +77,7 @@
 </template>
 
 <script>
-// import validateConfig from '@/config/validation'
+import { mapActions, mapState } from 'vuex';
 
 export default {
   data() {
@@ -107,19 +107,20 @@ export default {
       ]
     }
   },
-  methods: {
-    submit() {
+  methods: 
+  {
+    ...mapActions([
+      'registration',
+    ]),
+    async submit() {
       this.validate();
       if (this.valid) {
-        const data = {
+        this.registration({
           username: this.username,
           email: this.email,
           password: this.password,
           password_confirmation: this.confirm,
-        }
-
-        // eslint-disable-next-line
-        console.log({user: data});
+        });
       }
     },
     validate () {
@@ -129,6 +130,20 @@ export default {
         this.valid = false;
       }
     },
+  },
+  computed: {
+    ...mapState({
+      isRegister(state) {
+        return state.user.isRegister;
+      },
+    })
+  },
+  watch: {
+    isRegister(value) {
+      if (value) {
+        this.$router.push('/login');
+      }
+    }
   }
 }
 </script>

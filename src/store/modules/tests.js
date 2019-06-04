@@ -17,9 +17,14 @@ const testsStore = {
   },
   mutations: {
     successToFetchTests(state, payload) {
-      state.list =[...payload.testsList];
+      state.list =[...payload.testsList]
       state.currentNumber = 0
-      state.fetchStatus = fecthStatus.success;
+      state.countPassed = 0
+      state.startTime = null
+      state.endTime = null
+      state.stringTime = ''
+      state.testStatus = false
+      state.fetchStatus = fecthStatus.success
     },
     startToFetchTests(state) {
       state.fetchStatus = fecthStatus.start;
@@ -56,18 +61,11 @@ const testsStore = {
         i.server_answer = payload.list.find((item) => item.id === i.id).id_answer
         return i
       })]
-    }
+    },
   },
   actions: {
     async fetchTests({ commit }, payload) {
-      // TODO: refactor, one mutation
-
       commit('startToFetchTests');
-      commit('changeCurrentNumber',{ currentNumber: 0})
-      commit('setCountPassed',{ count: 0})
-      commit('setStartTime',{ time: null})
-      commit('setEndTime',{ time: null})
-      commit('setTestStatus',{status: false})
       commit('startLoadResource', null, { root: true });
 
       try {
@@ -115,9 +113,13 @@ const testsStore = {
           localStorage.setItem('testResult', parsed)
         }, 2000)
       } catch (error) {
-        // console.log(error);
         commit('errorOccured', { error }, { root: true });
       }
+    },
+    async Report({state},payload){
+      let question = {}
+      question.message = payload.mess
+      question.test = state.list[state.currentNumber]
     }
   }
 };

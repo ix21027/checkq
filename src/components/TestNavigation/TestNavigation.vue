@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <div class="place" v-for="(test, index) in list" :key="test.id">
-      <v-btn class="cell" @click="clickToNavigation(index)" :outline="index===currentNumber" :color="colors(index)" depressed fab small>{{index+1}}</v-btn>
-    </div>
-  </div>
+  <v-card>
+    <v-card-text>
+      <div class="place" v-for="(test, index) in list" :key="test.id">
+        <v-btn class="cell" @click="clickToNavigation(index)" :outline="index===currentNumber" :color="colors(index)" depressed fab small>{{index+1}}</v-btn>
+      </div>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -44,7 +46,7 @@ export default {
   .cell{
     border-radius: 3px;
     text-align: center;
-    margin: 2px;
+    margin: 1.5px;
   }
 }
 </style>

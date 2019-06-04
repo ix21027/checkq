@@ -1,8 +1,8 @@
 <template>
-	<v-flex xs3 sm2 md2>
-		<v-icon color="primary" size="20">access_time</v-icon>
-		{{time}}
-	</v-flex>
+  <v-flex>
+    <v-icon color="primary" size="20">access_time</v-icon>
+    {{time}}
+  </v-flex>
 </template>
 
 <script>

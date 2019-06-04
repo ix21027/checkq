@@ -1,8 +1,8 @@
 <template>
-	<v-flex xs3 sm2 md2>
-		<v-icon color="success" size="20" >check_circle</v-icon>
-		{{currentCount+'/'+lengthAll}}
-	</v-flex>
+  <v-flex>
+    <v-icon color="success" size="20" >check_circle</v-icon>
+    {{currentCount+'/'+lengthAll}}
+  </v-flex>
 </template>
 
 <script>

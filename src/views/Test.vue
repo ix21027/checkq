@@ -1,20 +1,14 @@
 <template>
-  <v-container grid-list-xl text-xs-center>
-    <div>
+  <v-layout row wrap justify-center>
+    <v-flex xs12 sm11 md11 lg8>
       <show-test
         :currentNumber='tests.currentNumber'
-        ></show-test>
-      <v-layout row wrap justify-center>
-        <v-flex md10 sm11>
-          <v-card>
-            <v-card-text>
-              <test-navigation></test-navigation>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </div>
-	</v-container>
+      ></show-test>
+    </v-flex>
+    <v-flex xs12 sm11 md11 lg8 mt-1>
+      <test-navigation></test-navigation>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>

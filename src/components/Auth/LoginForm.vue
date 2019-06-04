@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import {  mapActions, mapState } from 'vuex'
 
 export default {
   data() {
@@ -71,16 +72,12 @@ export default {
     }
   },
   methods: {
-    submit() {
+    ...mapActions(['authorization']),
+    async submit() {
       this.validate();
       if (this.valid) {
-        const data = {
-          email: this.email,
-          password: this.password,
-        }
-
-        // eslint-disable-next-line
-        console.log({user: data});
+        const { email, password } = this;
+        this.authorization({ email, password });
       }
     },
     validate () {
@@ -90,6 +87,25 @@ export default {
         this.valid = false;
       }
     },
+  },
+  computed: {
+    ...mapState({
+      userAuth(state) {
+        return state.user.isAuth;
+      }
+    })
+  },
+  watch: {
+    userAuth(value) {
+      if (value) {
+        this.$router.push('/');
+      }
+    }
+  },
+  created() {
+    if (this.userAuth) {
+      this.$router.push('/');
+    }
   }
 }
 </script>

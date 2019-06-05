@@ -1,9 +1,7 @@
+import { http, status} from '@/fetchapi';
 import fecthStatus from '@/constants/fetchStatus'
-import resultTest from '@/mocks/resultTest'
 import { formatTime, shuffle } from '@/utils'
 import Vue from 'vue'
-import axios from 'axios';
-import { status } from '@/fetchapi'
 
 const testsStore = {
   state: {
@@ -66,61 +64,56 @@ const testsStore = {
   },
   actions: {
     async fetchTests({ commit }, payload) {
-      commit('startToFetchTests');
-      commit('startLoadResource', null, { root: true });
-
+      const ctx = { title: 'test' }
       try {
-        const headers = {
-          'Content-type': 'application/json',
-          'Accept': 'application/json'
-        }
+        commit('startToFetchTests')
+        commit('startLoading', ctx, { root: true })
 
-        const requestData = JSON.stringify({test: {
+        const jsonData = JSON.stringify({test: {
           subject_ids: payload.categories,
           question_count: payload.testCount
         }});
 
-        const response = await axios({
-            url: 'https://checkq-api.herokuapp.com/api/test',
-            method: 'POST',
-            headers,
-            data: requestData,
-          }
-        );
+        const response = await http.post('test', jsonData);
 
         let testsList = response.data.map(t => ({  ...t, options: shuffle(t.options) }));
         testsList = shuffle(testsList);
 
         commit('successToFetchTests', { testsList });
-        commit('stopLoadResource', null, { root: true });
-
-        return {status: status.success};
       } catch (error) {
         commit('errorOccured', { error }, { root: true });
-
-        return { status: status.fail, error };
+      } finally {
+        commit('stopLoading', ctx, { root: true });
       }
     },
 
     async fetchResult({commit, state}){
-      commit('startLoadResource', null, { root: true });
+      const ctx = { title: 'result' };
       try {
-        setTimeout(() => {
-          commit('successToFetchTestResult', { list: resultTest });
-          commit('stopLoadResource', null, { root: true });
-          commit('setTestStatus', { status: true });
-          commit('setEndTime', { time: new Date().getTime()})
-          commit('setStringTime', { time: formatTime(state.endTime - state.startTime)})
-
-          const parsed = JSON.stringify(state.list)
-          const t = JSON.stringify(state.stringTime)
-          localStorage.setItem('testTime',t)
-          localStorage.setItem('testResult', parsed)
-        }, 2000)
-      } catch (error) {
-        commit('errorOccured', { error }, { root: true });
+        commit('startLoading', ctx, { root: true });
+        const userAnswer = {
+          result: state.list.map((i)=>({
+            id: i.id,
+            answer_id: i.answer || null
+          }))
+        }
+        const jsonData = JSON.stringify({answer: userAnswer});
+        const response = await http.post('answer', jsonData);
+        commit('successToFetchTestResult', { list: response.data });
+        commit('setEndTime', { time: new Date().getTime()});
+        commit('setStringTime', { time: formatTime(state.endTime - state.startTime)});
+        commit('setTestStatus', { status: true });
+        const parsed = JSON.stringify(state.list)
+        const t = JSON.stringify(state.stringTime)
+        localStorage.setItem('testTime',t)
+        localStorage.setItem('testResult', parsed)
+      } catch (err) {
+        commit('errorOccured', { error: err }, { root: true });
+      } finally {
+        commit('stopLoading', ctx, { root: true });
       }
     },
+
     async Report({state},payload){
       let question = {}
       question.message = payload.mess

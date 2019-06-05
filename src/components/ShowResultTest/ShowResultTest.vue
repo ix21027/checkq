@@ -13,10 +13,11 @@
 </template>
 
 <script>
+import ShowResultItem from '@/components/ShowResultItem/ShowResultItem';
 export default {
   props:['resultList'],
   components: {
-    appShowResultItem: ()=> import('./../ShowResultItem/ShowResultItem')
+    appShowResultItem: ShowResultItem,
   }
 }
 </script>

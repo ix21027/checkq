@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-flex>
     <div class="place" v-for="(item, index) in resultList" :key="item.id">
       <v-btn
         :to="`#${item.id}`"
@@ -13,7 +13,7 @@
         {{index+1}}
       </v-btn>
     </div>
-  </div>
+  </v-flex>
 </template>
 
 <script>
@@ -35,14 +35,12 @@ export default {
 <style lang='scss' scoped>
 .place{
   display: inline-block;
-  button{
-    width: 2em;
-    height: 2em;
-  }
   .cell{
+    // width: 3em;
+    // height: 3em;
     border-radius: 3px;
     text-align: center;
-    margin: 2px;
+    margin: 1.5px;
   }
 }
 </style>

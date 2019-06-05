@@ -120,6 +120,7 @@ $dot-radius: 5px;
     font-weight: bold;
     justify-content: space-between;
     cursor: pointer;
+    overflow-x: auto;
   }
   .body {
     padding: 0;

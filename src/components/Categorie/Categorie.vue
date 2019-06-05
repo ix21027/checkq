@@ -77,15 +77,20 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/styles/theme.scss';
+@import '@/styles/mixin.scss';
 
 .categorie-list {
   display: flex;
   flex-wrap: wrap;
   & > * {
-    flex: 0 1 calc(50% - 20px);
-    margin: $small-margin;
-    @media screen and (max-width: 960px) {
-      flex: 1 0 auto;
+    flex: 1 0 auto;
+    margin: $small-margin 0;
+    @include tablet-portrait {
+
+      flex: 0 1 calc(50% - 20px);
+      &:nth-child(odd) {
+        margin-right: 2*$small-margin;
+      }
     }
   }
 }

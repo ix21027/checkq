@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout pa-3>
     <v-flex>
       <v-flex text-xs-center>
         <h1>Реєстрація</h1>

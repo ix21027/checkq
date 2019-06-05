@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn flat small @click="dialog = true">
-      <v-icon left size="20">error</v-icon>
+      <v-icon left size="20">bug_report</v-icon>
       <div class="btn-text">
         Знайшли помилку ?
       </div>
@@ -10,23 +10,30 @@
       v-model="dialog"
       max-width="500px"
     >
-    <v-layout row wrap class="place" pa-3>
-      <v-flex xs12 text-xs-center>
-        Звіт про помилку.
+    <div class="place">
+    <v-layout row wrap class="">
+      <v-flex class="report-control">
+        <v-icon
+          @click="dialog = false"
+        >close</v-icon>
       </v-flex>
+    </v-layout>
+
+    <v-layout row wrap class="place" pl-3 pr-3 pb-3 pt-2>
       <v-flex xs12 >
         <v-textarea
           v-model="value"
           ref="txt"
-          label="Коротко опишіть помилку."
+          color="black"
+          label="Коротко опишіть помилку"
         >
         </v-textarea>
       </v-flex>
       <v-flex xs12 text-xs-right>
-        <v-btn small @click="dialog = false">Відміна</v-btn>
-        <v-btn small @click="sendMessage()" color="success">Відправити</v-btn>
+        <v-btn small @click="sendMessage" outline color="orange">Відправити</v-btn>
       </v-flex>
     </v-layout>
+    </div>
     </v-dialog>
   </div>
 </template>
@@ -61,10 +68,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/styles/theme.scss';
+
 .place{
   background: #fff;
   border-radius: 2px;
+}
+.report-control {
+  padding: 5px 10px;
+  background: $main-color;
 }
 @media (max-width: 600px){
   .btn-text{

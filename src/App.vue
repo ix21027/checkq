@@ -2,7 +2,7 @@
   <v-app>
     <app-header></app-header>
     <v-content class='content'>
-      <v-container>
+      <v-container pa-0>
         <app-watcher></app-watcher>
         <router-view></router-view>
       </v-container>
@@ -31,5 +31,7 @@ export default {
 </script>
 
 <style>
-
+.content {
+  overflow: hidden;
+}
 </style>

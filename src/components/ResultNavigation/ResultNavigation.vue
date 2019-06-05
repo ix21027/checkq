@@ -1,5 +1,5 @@
 <template>
-  <v-flex>
+  <v-flex class="navigation">
     <div class="place" v-for="(item, index) in resultList" :key="item.id">
       <v-btn
         :to="`#${item.id}`"
@@ -33,6 +33,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '@/styles/mixin.scss';
+
 .place{
   display: inline-block;
   .cell{
@@ -41,6 +43,12 @@ export default {
     border-radius: 3px;
     text-align: center;
     margin: 1.5px;
+  }
+}
+
+.navigation {
+  @include mobile {
+    margin-top: 10px;
   }
 }
 </style>

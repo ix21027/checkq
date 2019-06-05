@@ -64,7 +64,9 @@ const testsStore = {
   },
   actions: {
     async fetchTests({ commit }, payload) {
-      const ctx = { title: 'test' }
+      const ctx = { title: 'test' };
+      let fetchStatus = status.start;
+
       try {
         commit('startToFetchTests')
         commit('startLoading', ctx, { root: true })
@@ -80,15 +82,20 @@ const testsStore = {
         testsList = shuffle(testsList);
 
         commit('successToFetchTests', { testsList });
+        fetchStatus = status.success;
       } catch (error) {
         commit('errorOccured', { error }, { root: true });
+        fecthStatus = status.error;
       } finally {
         commit('stopLoading', ctx, { root: true });
       }
+
+      return { status: fetchStatus };
     },
 
     async fetchResult({commit, state}){
       const ctx = { title: 'result' };
+      let fetchStatus = status.start;
       try {
         commit('startLoading', ctx, { root: true });
         const userAnswer = {
@@ -107,11 +114,15 @@ const testsStore = {
         const t = JSON.stringify(state.stringTime)
         localStorage.setItem('testTime',t)
         localStorage.setItem('testResult', parsed)
+        fetchStatus = status.success;
       } catch (err) {
         commit('errorOccured', { error: err }, { root: true });
+        fetchStatus = status.error;
       } finally {
         commit('stopLoading', ctx, { root: true });
       }
+
+      return { status: fetchStatus };
     },
 
     async Report({state},payload){

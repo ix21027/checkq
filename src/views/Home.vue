@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout pa-3>
     <v-flex col>
       <v-layout row wrap ma-2>
         <v-flex>

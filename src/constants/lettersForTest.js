@@ -1,1 +1,1 @@
-export default ['A','B','C','D']
+export default ['А','Б','В','Г']

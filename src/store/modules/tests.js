@@ -3,6 +3,7 @@ import resultTest from '@/mocks/resultTest'
 import { formatTime, shuffle } from '@/utils'
 import Vue from 'vue'
 import axios from 'axios';
+import { status } from '@/fetchapi'
 
 const testsStore = {
   state: {
@@ -92,8 +93,12 @@ const testsStore = {
 
         commit('successToFetchTests', { testsList });
         commit('stopLoadResource', null, { root: true });
+
+        return {status: status.success};
       } catch (error) {
         commit('errorOccured', { error }, { root: true });
+
+        return { status: status.fail, error };
       }
     },
 

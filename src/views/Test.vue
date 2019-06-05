@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap justify-center>
+  <v-layout v-if="this.tests.list.length !== 0" row wrap justify-center>
     <v-flex xs12 sm11 md11 lg8>
       <app-show-test
         :currentNumber='tests.currentNumber'

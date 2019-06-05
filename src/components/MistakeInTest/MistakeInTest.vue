@@ -2,7 +2,9 @@
   <div>
     <v-btn flat small @click="dialog = true">
       <v-icon left size="20">error</v-icon>
-      Знайшли помилку ?
+      <div class="btn-text">
+        Знайшли помилку ?
+      </div>
     </v-btn>
     <v-dialog
       v-model="dialog"
@@ -10,7 +12,7 @@
     >
     <v-layout row wrap class="place" pa-3>
       <v-flex xs12 text-xs-center>
-        Заголовок
+        Звіт про помилку.
       </v-flex>
       <v-flex xs12 >
         <v-textarea
@@ -64,4 +66,10 @@ export default {
   background: #fff;
   border-radius: 2px;
 }
+@media (max-width: 600px){
+  .btn-text{
+    display: none;
+  }
+}
+
 </style>

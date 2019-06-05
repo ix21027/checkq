@@ -2,7 +2,7 @@
   <v-layout column elevation-3 pa-3 class="place">
     <v-flex>
       <v-layout row align-center wrap>
-        <v-flex xs1>
+        <v-flex xs12 sm1 >
           <div class="circle-question">
             {{currentNumber+1}}
           </div>
@@ -37,30 +37,30 @@
     </v-flex>
     <v-flex>
         <v-layout row justify-space-between>
-          <v-flex xs4 text-xs-left>
-            <v-btn flat left @click="previosQuestion" outline color="grean" :disabled="currentNumber==0" >НАЗАД</v-btn>
+          <v-flex xs5 >
+            <v-btn flat @click="previosQuestion" outline color="grean" :disabled="currentNumber==0">НАЗАД</v-btn>
           </v-flex>
           <template v-if="!(tests.list.length===(currentNumber+1))">
-            <v-flex xs4 text-xs-right>
-              <v-btn flat right @click="nextQuestion" outline color="success">ДАЛІ</v-btn>
+            <v-flex xs7 text-xs-right>
+              <v-btn flat @click="nextQuestion" outline color="success">ДАЛІ</v-btn>
             </v-flex>
           </template>
           <template v-else>
-            <v-flex xs5 text-xs-right>
-              <v-btn flat right @click="endTest" outline color="success">Закінчити тест</v-btn>
+            <v-flex xs7 text-xs-right>
+              <v-btn flat  @click="endTest" outline color="success">Закінчити тест</v-btn>
             </v-flex>
           </template>
         </v-layout>
     </v-flex>
     <v-flex >
         <v-layout row justify-space-between align-center>
-          <v-flex xs8 pl-3>
+          <v-flex xs4 sm8>
             <app-mistake></app-mistake>
           </v-flex>
-          <v-flex xs2 text-xs-right>
+          <v-flex xs4 sm2 text-xs-center text-sm-right>
             <app-timer :initTime="initTime"></app-timer>
           </v-flex>
-          <v-flex xs2 pr-3 text-xs-right>
+          <v-flex xs4 sm2 pr-3 text-xs-center text-sm-right>
             <app-count></app-count>
           </v-flex>
         </v-layout>
@@ -172,6 +172,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
   width: 40px;
   height: 40px;
   background: #4CAF50;

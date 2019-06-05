@@ -42,7 +42,11 @@
 </template>
 
 <script>
+import ShowResultTest from '@/components/ShowResultTest/ShowResultTest';
+import ResultNavigation from '@/components/ResultNavigation/ResultNavigation';
+import Anchor from '@/components/Anchor/Anchor';
 import { mapState } from 'vuex';
+
 export default {
   data() {
     return {
@@ -94,9 +98,9 @@ export default {
       ]),
   },
   components:{
-    appShowResultTest: () => import('./../components/ShowResultTest/ShowResultTest'),
-    appResultNavigation: () => import('./../components/ResultNavigation/ResultNavigation'),
-    appAnchor: () => import('./../components/Anchor/Anchor')
+    appShowResultTest: ShowResultTest,
+    appResultNavigation: ResultNavigation,
+    appAnchor: Anchor,
   }
 }
 </script>

@@ -11,7 +11,9 @@
       @click="open = !open"
     >
       <div>
-        {{index+1}}. {{item.question}}
+        <app-katex
+          :expression='`${index+1}. ${item.question}`'>
+        </app-katex>
       </div>
       <div class="icon">
         <div class="dot"></div>
@@ -29,7 +31,9 @@
           </div>
         </div>
         <div class="option-text">
-          {{letters[count]}}. {{i.title}}
+          <app-katex
+            :expression='`${letters[count]}. ${i.title}`'>
+          </app-katex>
         </div>
       </div>
       <div v-if="!correct()" class="true-answer">
@@ -40,7 +44,8 @@
 </template>
 
 <script>
-import letters from './../../constants/lettersForTest'
+import letters from '@/constants/lettersForTest';
+import Katex from '@/components/WithFormula/WithFormula';
 
 export default {
   data() {
@@ -54,7 +59,10 @@ export default {
     correct(){
       return this.item.answer === this.item.server_answer
     }
-  }
+  },
+  components: {
+    appKatex: Katex,
+  },
 }
 </script>
 

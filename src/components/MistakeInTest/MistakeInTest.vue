@@ -16,7 +16,7 @@
         <v-textarea
           v-model="value"
           ref="txt"
-          label="Коротко опишить помилку."
+          label="Коротко опишіть помилку."
         >
         </v-textarea>
       </v-flex>

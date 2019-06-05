@@ -70,7 +70,11 @@
 
 <script>
 import { mapState, mapMutations, mapActions} from 'vuex';
-import letters from './../../constants/lettersForTest'
+import Timer from '@/components/Timer/Timer';
+import Count from '@/components/Count/Count';
+import Katex from '@/components/WithFormula/WithFormula';
+import Mistake from '@/components/MistakeInTest/MistakeInTest';
+import letters from '@/constants/lettersForTest'
 
 export default {
   data() {
@@ -141,13 +145,14 @@ export default {
     }
   },
   components: {
-    appTimer: () => import('@/components/Timer/Timer'),
-    appCount: () => import('@/components/Count/Count'),
-    appKatex: () => import('@/components/WithFormula/WithFormula'),
-    appMistake: ()=> import('@/components/MistakeInTest/MistakeInTest')
+    appTimer: Timer,
+    appCount: Count,
+    appKatex: Katex,
+    appMistake: Mistake,
   },
 }
 </script>
+
 <style scoped>
 .place{
   background: #fff;

@@ -1,19 +1,21 @@
 <template>
   <v-layout row wrap justify-center>
     <v-flex xs12 sm11 md11 lg8>
-      <show-test
+      <app-show-test
         :currentNumber='tests.currentNumber'
-      ></show-test>
+      ></app-show-test>
     </v-flex>
     <v-flex xs12 sm11 md11 lg8 mt-1>
-      <test-navigation></test-navigation>
+      <app-test-navigation></app-test-navigation>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import fetchStatus from './../constants/fetchStatus'
+import ShowTest from '@/components/ShowTest/ShowTest';
+import TestNavigation from '@/components/TestNavigation/TestNavigation';
+import fetchStatus from '@/constants/fetchStatus';
 
 export default {
   created() {
@@ -38,9 +40,8 @@ export default {
     ]),
   },
   components:{
-    ShowTest: () => import('./../components/ShowTest/ShowTest'),
-    TestNavigation: ()=> import('./../components/TestNavigation/TestNavigation'),
-    // Loader: ()=> import('./../components/Loader/Loader')
+    appShowTest: ShowTest,
+    appTestNavigation: TestNavigation,
   }
 }
 </script>

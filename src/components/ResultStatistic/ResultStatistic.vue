@@ -1,7 +1,7 @@
 <template>
   <v-flex xs12 sm5 lg6 class="statistic">
     <v-layout column align-center justify-center class="statistic-main-info">
-      <v-flex>
+      <v-flex class="progress">
         <v-layout justify-center align-center mb-3 fill-height>
             <v-flex>
               <v-progress-circular
@@ -66,8 +66,8 @@ export default {
   computed: {
     persent() {
       let p = 0;
-      if (this.positive !== 0) {
-        p = Math.floor((this.total / this.positive) * 100);
+      if (this.total !== 0) {
+        p = Math.floor((this.positive / this.total) * 100);
       }
 
       return p;
@@ -78,6 +78,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/styles/theme.scss';
+@import '@/styles/mixin.scss';
 
 .statistic {
   border: 2px solid $main-color;
@@ -85,6 +86,12 @@ export default {
   padding: 10px;
   &-main-info {
     height: 100%;
+    @include desktop{
+      flex-direction: row;
+      .progress {
+        margin-right: 20px;
+      }
+    }
   }
 }
 </style>

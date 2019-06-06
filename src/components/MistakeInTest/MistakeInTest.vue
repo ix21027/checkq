@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn flat small @click="dialog = true">
-      <v-icon left size="20">bug_report</v-icon>
+      <v-icon left>bug_report</v-icon>
       <div class="btn-text">
         Знайшли помилку ?
       </div>

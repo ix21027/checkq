@@ -22,3 +22,8 @@
 @mixin big-desktop {
   @media (min-width: 1904px) { @content; }
 }
+
+//print
+@mixin  print {
+  @media print { @content; }
+}

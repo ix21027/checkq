@@ -1,17 +1,14 @@
 <template>
-  <v-flex class="navigation">
+  <v-flex>
     <div class="place" v-for="(item, index) in resultList" :key="item.id">
-      <v-btn
+      <div
         :to="`#${item.id}`"
-        class="cell"
+        class="nav-btn"
         @click.native="scrollFix(`#${item.id}`)"
-        :color="colors(index)"
-        depressed
-        fab
-        small
+        :class="{ correct: resultList[index].answer === resultList[index].server_answer }"
       >
         {{index+1}}
-      </v-btn>
+      </div>
     </div>
   </v-flex>
 </template>
@@ -20,29 +17,49 @@
 export default {
   props:['resultList'],
   methods: {
-    colors(index){
-      return this.resultList[index].answer === this.resultList[index].server_answer ? "#9DF99B" : "#FFCCCC"
-    },
     scrollFix: function(hashbang)
     {
       location.href = hashbang;
       window.scroll(window.scrollX, window.scrollY - 70);
     }
   },
+  computed: {
+    isCorrect(index) {
+      return (this.resultList[index].answer === this.resultList[index].server_answer);
+    }
+  }
 }
 </script>
 
 <style lang='scss' scoped>
 @import '@/styles/mixin.scss';
+@import '@/styles/theme.scss';
+$size-btn: 30px;
 
 .place{
   display: inline-block;
-  .cell{
-    // width: 3em;
-    // height: 3em;
+  .nav-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(255, 252, 252);
     border-radius: 3px;
     text-align: center;
+    background: $uncorrect;
+    color: #fff;
     margin: 1.5px;
+    width: $size-btn;
+    height: $size-btn;
+    border-radius: $size-btn;
+    cursor: pointer;
+    border: 0px;
+    margin: 5px;
+    &:hover {
+      border: 2px solid;
+    }
+    &.correct {
+      background: $correct;
+    }
   }
 }
 

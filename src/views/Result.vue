@@ -10,7 +10,7 @@
     </v-layout>
       <v-layout row wrap class="lay2">
         <v-flex>
-          <v-layout row wrap justify-center>
+          <v-layout row wrap justify-space-between>
             <app-statistic
               :total="count"
               :positive="correct"
@@ -18,7 +18,7 @@
               :blank="noAnswer"
               :time="time"
             />
-          <v-flex xs12 sm6 lg4 ml-4>
+          <v-flex xs12 sm6 lg5 ml-4>
             <app-result-navigation :resultList='testResult'></app-result-navigation>
           </v-flex>
           </v-layout>

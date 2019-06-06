@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const API_URL = 'https://checkq-api.herokuapp.com/api/'
+const API_URL = 'https://checkq-api.herokuapp.com/api/';
 
 export const http = axios.create({
   baseURL: API_URL,
@@ -8,7 +8,7 @@ export const http = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   }
-})
+});
 
 export const status = {
   start: 'START',
@@ -16,5 +16,5 @@ export const status = {
   success: 'SUCCESS',
   fail: 'FAIL',
   initial: 'INITIAL',
-}
-
+  error: 'ERROR',
+};

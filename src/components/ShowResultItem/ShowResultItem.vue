@@ -6,13 +6,14 @@
     class="accordion"
     :id="item.id"
   >
+  <div class="accordion-counter">{{index + 1}}</div>
     <div
       class="head"
       @click="open = !open"
     >
       <div>
         <app-katex
-          :expression='`${index+1}. ${item.question}`'>
+          :expression='`${item.question}`'>
         </app-katex>
       </div>
       <div class="icon">
@@ -68,6 +69,8 @@ export default {
 
 
 <style lang="scss" scoped>
+@import '@/styles/theme.scss';
+@import '@/styles/mixin.scss';
 
 $dot-radius: 5px;
 .true-answer{
@@ -106,13 +109,33 @@ $dot-radius: 5px;
   }
 }
 .accordion {
-  background: #FFCCCC;
+
   position: relative;
   margin: 10px 0;
-  &.correct {
-    background: #9DF99B;
+  border-left: 5px solid $uncorrect;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 3px $inactive-color;
+  .accordion-counter {
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    background: $uncorrect;
+    top: calc(50% - 15px);
+    left: -17px;
+    text-align: center;
+    border-radius: 20px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  border-radius: 2px;
+
+  &.correct {
+    border-color: $correct;
+    .accordion-counter {
+      background: $correct;
+    }
+  }
   line-height: 20px;
   padding: 15px;
   .head {
@@ -120,12 +143,24 @@ $dot-radius: 5px;
     font-weight: bold;
     justify-content: space-between;
     cursor: pointer;
+    position: relative;
+    margin-left: 10px;
+    @include mobile {
+      overflow-x: auto;
+    }
+
   }
   .body {
     padding: 0;
     max-height: 0;
     transition: 0.4s;
     overflow: hidden;
+    @include print {
+      max-height: 100vh;
+    }
+    @include desktop {
+      margin-left: 20px
+    }
   }
   &.open {
     .body {

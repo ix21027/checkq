@@ -3,37 +3,27 @@
     <app-anchor ></app-anchor>
     <v-layout row wrap class="lay" my-2 >
       <v-flex xs12 sm10 md10 lg9 xl8 class="f">
-      <h2><v-icon color="success" size="23">description</v-icon>
-        РЕЗУЛЬТАТИ ТЕСТУ
-      </h2>
+        <h1>
+          Результат
+        </h1>
       </v-flex>
     </v-layout>
       <v-layout row wrap class="lay2">
-        <v-flex xs12 sm5 lg4>
-          <v-layout row wrap align-end>
-            <v-flex xs6 my-1>ПИТАННЯ:</v-flex>
-            <v-flex xs1 ><v-icon color="success" size="25">ballot</v-icon></v-flex>
-            <v-flex xs4 my-1 ml-2>{{count}}</v-flex>
-
-            <v-flex xs6 my-1>ПРАВИЛЬНО:</v-flex>
-            <v-flex xs1 ><v-icon color="success" size="25">check_circle</v-icon></v-flex>
-            <v-flex xs4 my-1 ml-2>{{correct}}</v-flex>
-
-            <v-flex xs6 my-1>НЕПРАВИЛЬНО:</v-flex>
-            <v-flex xs1 ><v-icon color="error" size="25">error</v-icon></v-flex>
-            <v-flex xs4 my-1 ml-2>{{errors}}</v-flex>
-
-            <v-flex xs6 my-1>НЕ ДАНО ВІДПОВІДІ:</v-flex>
-            <v-flex xs1 ><v-icon color="error" size="25">speaker_notes_off</v-icon></v-flex>
-            <v-flex xs4 my-1 ml-2>{{noAnswer}}</v-flex>
-
-            <v-flex xs6 my-1>ЧАС ПРОХОДЖЕННЯ:</v-flex>
-            <v-flex xs4 my-1>{{time}}</v-flex>
+        <v-flex>
+          <v-layout row wrap justify-space-between>
+            <app-statistic
+              :total="count"
+              :positive="correct"
+              :negative="errors"
+              :blank="noAnswer"
+              :time="time"
+            />
+          <v-flex xs12 sm6 lg5 ml-4>
+            <app-result-navigation :resultList='testResult'></app-result-navigation>
+          </v-flex>
           </v-layout>
         </v-flex>
-        <v-flex xs12 sm7 lg8>
-          <app-result-navigation :resultList='testResult'></app-result-navigation>
-        </v-flex>
+
       </v-layout>
       <v-layout row wrap my-2>
         <app-show-result-test :resultList='testResult' ></app-show-result-test>
@@ -45,6 +35,7 @@
 import ShowResultTest from '@/components/ShowResultTest/ShowResultTest';
 import ResultNavigation from '@/components/ResultNavigation/ResultNavigation';
 import Anchor from '@/components/Anchor/Anchor';
+import ResultStatistic from '@/components/ResultStatistic/ResultStatistic';
 import { mapState } from 'vuex';
 
 export default {
@@ -101,9 +92,14 @@ export default {
     appShowResultTest: ShowResultTest,
     appResultNavigation: ResultNavigation,
     appAnchor: Anchor,
+    appStatistic: ResultStatistic,
   }
 }
 </script>
 
 <style lang='scss' scoped>
+.result-control {
+  padding: 10px;
+  border: 2px solid #444;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-layout fill-height>
+  <v-layout fill-height pa-3>
     <v-flex>
       <v-flex text-xs-center>
         <h1>Вхід</h1>

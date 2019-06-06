@@ -5,12 +5,14 @@
       </div>
       <div class="links">
         <div class="control" v-if='!isAuth'>
-          <v-btn flat to='/register' dark>
-          <v-icon left>fingerprint</v-icon>
-          Реєстрація</v-btn>
-          <v-btn flat to='/login' dark>
-          <v-icon left>how_to_reg</v-icon>
-          Вхід</v-btn>
+          <v-btn flat to='/register' dark class="nav-btn">
+            <v-icon>fingerprint</v-icon>
+            <div class="nav-btn-text">Реєстрація</div>
+          </v-btn>
+          <v-btn flat to='/login' dark class="nav-btn">
+            <v-icon>how_to_reg</v-icon>
+            <div class="nav-btn-text">Вхід</div>
+          </v-btn>
         </div>
         <div class="control" v-else>
           <div
@@ -24,10 +26,6 @@
               <img src="@/assets/logo.png" alt="">
             </div>
           </div>
-<!-- 
-          <v-btn flat dark @click="signOut">
-            <v-icon>directions_run</v-icon>
-            Вийти</v-btn> -->
         </div>
       </div>
   </v-toolbar>
@@ -94,6 +92,9 @@ export default {
     font-size: 14pt;
     color: $white;
     margin: 10px;
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
   }
   .user-icon {
     width: 40px;
@@ -109,6 +110,20 @@ export default {
       width: 30px;
       border-radius: 30px;
     }
+  }
+}
+
+.nav-btn {
+  @media screen and (max-width: 600px) {
+    width: 40px !important;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.nav-btn-text {
+  @media screen and (max-width: 600px) {
+    display: none;
   }
 }
 

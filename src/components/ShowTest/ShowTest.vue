@@ -90,7 +90,7 @@
     <v-flex >
         <v-layout row justify-space-between align-center>
           <v-flex xs4 sm8>
-            <app-mistake></app-mistake>
+
           </v-flex>
           <v-flex xs4 sm2 text-xs-center text-sm-right>
             <app-timer :initTime="initTime"></app-timer>

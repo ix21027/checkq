@@ -16,11 +16,7 @@
           :expression='`${item.question}`'>
         </app-katex>
       </div>
-      <div class="icon">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
+
     </div>
     <div
       class="body"
@@ -87,6 +83,7 @@ $size: 26px;
   display: flex;
   position: relative;
   padding: 5px 0;
+  align-items: center;
   .option-text{
     width: 95%;
   }
@@ -198,10 +195,9 @@ $size: 26px;
   font-weight: bold;
   margin-right: 0.5em;
   &.checked {
-    background: $uncorrect;
-    color: #fff;
+    border: 2px solid $side-color;
     &.correct-option{
-      background: $correct;
+      border: 2px solid $side-color;
     }
   }
 }

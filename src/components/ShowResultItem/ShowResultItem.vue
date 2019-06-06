@@ -27,13 +27,19 @@
     >
       <div v-for="(i,count) in item.options" :key="i.id" class="option">
         <div>
-          <div class="circle" :class="{ check: item.answer === i.id}">
-            <div class="dotc"></div>
+          <div
+            class="letter"
+            :class="{
+              checked: item.answer === i.id,
+              'correct-option': correct(),
+            }"
+          >
+            {{letters[count]}}
           </div>
         </div>
         <div class="option-text">
           <app-katex
-            :expression='`${letters[count]}. ${i.title}`'>
+            :expression='`${i.title}`'>
           </app-katex>
         </div>
       </div>
@@ -73,6 +79,7 @@ export default {
 @import '@/styles/mixin.scss';
 
 $dot-radius: 5px;
+$size: 26px;
 .true-answer{
   margin: 5px 0 0 10px;
 }
@@ -100,11 +107,7 @@ $dot-radius: 5px;
       }
     }
     .dotc {
-      display: none;
-      width: 10px;
-      height: 10px;
-      background: #444;
-      border-radius: 20px;
+      // display: none;
     }
   }
 }
@@ -183,20 +186,23 @@ $dot-radius: 5px;
   height: 20px;
   position: relative;
 }
-.dot {
-  position: relative;
-  top: 7px;
-  width: $dot-radius;
-  height: $dot-radius;
-  background: #444;
-  border-radius: $dot-radius;
-  margin: 0 1px;
-  transition: 0.4s;
-  &:nth-child(even){
-    top: 10px;
-  }
-  &:nth-child(odd) {
-    top: 5px;
+.letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $size;
+  width: $size;
+  height: $size;
+  min-width: $size;
+  min-height: $size;
+  font-weight: bold;
+  margin-right: 0.5em;
+  &.checked {
+    background: $uncorrect;
+    color: #fff;
+    &.correct-option{
+      background: $correct;
+    }
   }
 }
 

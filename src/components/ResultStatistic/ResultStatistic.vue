@@ -16,30 +16,40 @@
             </v-flex>
         </v-layout>
       </v-flex>
+
       <v-flex>
+        <v-layout row wrap align-end>
+          <v-flex xs6 my-1 mr-2>Кількість питань:</v-flex>
+          <v-flex xs4 my-1>{{total}}</v-flex>
 
-    <v-layout row wrap align-end>
-      <v-flex xs6 my-1 mr-2>Кількість питань:</v-flex>
-      <v-flex xs4 my-1>{{total}}</v-flex>
+          <v-flex xs6 my-1 mr-2>Правильно:</v-flex>
+          <v-flex xs4 my-1>{{positive}}</v-flex>
 
-      <v-flex xs6 my-1 mr-2>Правильно:</v-flex>
-      <v-flex xs4 my-1>{{positive}}</v-flex>
+          <v-flex xs6 my-1 mr-2>Невірно:</v-flex>
+          <v-flex xs4 my-1>{{negative}}</v-flex>
 
-      <v-flex xs6 my-1 mr-2>Невірно:</v-flex>
-      <v-flex xs4 my-1>{{negative}}</v-flex>
+          <v-flex xs6 my-1 mr-2>Без відповіді:</v-flex>
+          <v-flex xs4 my-1>{{blank}}</v-flex>
 
-      <v-flex xs6 my-1 mr-2>Без відповіді:</v-flex>
-      <v-flex xs4 my-1>{{blank}}</v-flex>
-
-      <v-flex xs6 my-1 mr-2>Час:</v-flex>
-      <v-flex xs4 my-1>{{time}}</v-flex>
+          <v-flex xs6 my-1 mr-2>Час:</v-flex>
+          <v-flex xs4 my-1>{{time}}</v-flex>
+        </v-layout>
+      </v-flex>
     </v-layout>
-  </v-flex>
-  </v-layout>
+    <v-layout justify-center>
+      <v-flex xs12 md10 lg5 >
+        <div @click="startTest" class="btn-try-again">
+          Пройти тест ще раз.
+        </div>
+      </v-flex>
+    </v-layout>
   </v-flex>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { status } from '@/fetchapi'
+
 export default {
   props: {
     total: {
@@ -62,6 +72,14 @@ export default {
       type: String,
       required: true,
     },
+    categories: {
+      type: Array,
+      required: true,
+    },
+    testCount: {
+      type: Number,
+      required: true,
+    },
   },
   computed: {
     persent() {
@@ -72,7 +90,23 @@ export default {
 
       return p;
     }
-  }
+  },
+  methods: {
+    ...mapActions([
+      'fetchTests'
+    ]),
+    async startTest() {
+      const r = await this.fetchTests({
+        categories: this.categories,
+        testCount: this.testCount
+      });
+
+      if (r.status === status.success) {
+        this.$router.push('/test')
+      }
+      //TODO: handle error, r.status may error
+    },
+  },
 }
 </script>
 
@@ -85,12 +119,26 @@ export default {
   border-radius: $block-border-radius;
   padding: 10px;
   &-main-info {
-    height: 100%;
+    height: 90%;
     @include desktop{
       flex-direction: row;
       .progress {
         margin-right: 20px;
       }
+    }
+  }
+  .btn-try-again{
+    display: flex;
+    justify-content: center;
+    color: $background-color;
+    background: $main-color;
+    width: 100%;
+    height: 100%;
+    border-radius: $block-border-radius;
+    cursor: pointer;
+    &:hover{
+      background: $side-color;
+      color: $main-color;
     }
   }
 }

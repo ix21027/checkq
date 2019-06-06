@@ -17,6 +17,8 @@
               :negative="errors"
               :blank="noAnswer"
               :time="time"
+              :categories="categories"
+              :testCount="testCount"
             />
           <v-flex xs12 sm6 lg5 ml-4>
             <app-result-navigation :resultList='testResult'></app-result-navigation>
@@ -42,29 +44,44 @@ export default {
   data() {
     return {
       testResult: [],
-      time:'',
+      time: '',
       count: 0,
-      correct:0,
-      errors:0,
-      noAnswer:0,
+      correct: 0,
+      errors: 0,
+      noAnswer: 0,
+      categories: [],
+      testCount: 0,
     }
   },
   created() {
     if (this.tests.list.length !== 0) {
       this.testResult = this.tests.list;
       this.time = this.tests.stringTime
+      this.categories = this.tests.categoriesList
+      this.testCount = this.tests.testCount
     }else if(localStorage.getItem('testResult') !== null){
       try {
         this.testResult = JSON.parse(localStorage.getItem('testResult'))
         if(localStorage.getItem('testTime') !== null){
           this.time = JSON.parse(localStorage.getItem('testTime'))
-        }
-        else{
+        }else{
           this.timeResult = this.tests.stringTime
+        }
+        if(localStorage.getItem('categories') !== null){
+          this.categories = JSON.parse(localStorage.getItem('categories'))
+        }else{
+          this.categories = this.tests.categoriesList
+        }
+        if(localStorage.getItem('testCount') !== null){
+          this.testCount = JSON.parse(localStorage.getItem('testCount'))
+        }else{
+          this.testCount = this.tests.testCount
         }
       } catch (error) {
         localStorage.removeItem('testResult')
         localStorage.removeItem('timeResult')
+        localStorage.removeItem('categories')
+        localStorage.removeItem('testCount')
         this.$router.push({ path: '/' })
       }
     }else{

@@ -5,18 +5,22 @@ import Vue from 'vue'
 
 const testsStore = {
   state: {
-    list: [],
-    currentNumber: 0,
-    fetchStatus: fecthStatus.failed,
-    countPassed: 0,
-    startTime: null,
-    endTime: null,
-    stringTime: '',
+    list: [], //массив тестов
+    categoriesList:[], //массив категорий по которым эти тесты
+    testCount: 0, //кол-во тестов которое было выбрано изначально.
+    currentNumber: 0, //текущий номер теста на странице
+    fetchStatus: fecthStatus.failed,//статус получин ли тест
+    countPassed: 0, //кол-во данных ответов
+    startTime: null, //время начала теста
+    endTime: null, //время окончания теста
+    stringTime: '', //время в строковом формате
     testStatus: false, // false если тест пройден.
   },
   mutations: {
     successToFetchTests(state, payload) {
       state.list =[...payload.testsList]
+      state.categoriesList = [...payload.categoriesList]
+      state.testCount = payload.testCount
       state.currentNumber = 0
       state.countPassed = 0
       state.startTime = null
@@ -81,11 +85,15 @@ const testsStore = {
         let testsList = response.data.map(t => ({  ...t, options: shuffle(t.options) }));
         testsList = shuffle(testsList);
 
-        commit('successToFetchTests', { testsList });
+        commit('successToFetchTests', {
+          testsList: testsList,
+          categoriesList: payload.categories,
+          testCount: payload.testCount,
+        });
         fetchStatus = status.success;
       } catch (error) {
         commit('errorOccured', { error }, { root: true });
-        fecthStatus = status.error;
+        fetchStatus = status.error;
       } finally {
         commit('stopLoading', ctx, { root: true });
       }
@@ -110,10 +118,23 @@ const testsStore = {
         commit('setEndTime', { time: new Date().getTime()});
         commit('setStringTime', { time: formatTime(state.endTime - state.startTime)});
         commit('setTestStatus', { status: true });
-        const parsed = JSON.stringify(state.list)
-        const t = JSON.stringify(state.stringTime)
-        localStorage.setItem('testTime',t)
-        localStorage.setItem('testResult', parsed)
+
+        localStorage.setItem(
+          'testResult',
+          JSON.stringify(state.list)
+        )
+        localStorage.setItem(
+          'testTime',
+          JSON.stringify(state.stringTime)
+        )
+        localStorage.setItem(
+          'testCount',
+          JSON.stringify(state.testCount)
+        )
+        localStorage.setItem(
+          'categories',
+          JSON.stringify(state.categoriesList)
+        )
         fetchStatus = status.success;
       } catch (err) {
         commit('errorOccured', { error: err }, { root: true });

@@ -4,7 +4,7 @@
       <div
         :to="`#${item.id}`"
         class="nav-btn"
-        @click.native="scrollFix(`#${item.id}`)"
+        @click="scrollFix(`#${item.id}`)"
         :class="{ correct: resultList[index].answer === resultList[index].server_answer }"
       >
         {{index+1}}

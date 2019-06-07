@@ -123,7 +123,7 @@ export default {
       return (this.categories.fetchStatus === fetchStatus.fail)
     },
     isValid() {
-      return (this.selectedCategories.length > 0 && this.testNumber > 0);
+      return (this.selectedCategories.length > 0 && this.testNumber >= this.selectedCategories.length);
     }
   },
 

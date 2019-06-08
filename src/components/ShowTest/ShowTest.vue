@@ -108,7 +108,6 @@ import { mapState, mapMutations, mapActions} from 'vuex';
 import Timer from '@/components/Timer/Timer';
 import Count from '@/components/Count/Count';
 import Katex from '@/components/WithFormula/WithFormula';
-import Mistake from '@/components/MistakeInTest/MistakeInTest';
 import letters from '@/constants/lettersForTest'
 
 export default {
@@ -178,7 +177,6 @@ export default {
     appTimer: Timer,
     appCount: Count,
     appKatex: Katex,
-    appMistake: Mistake,
   },
 }
 </script>

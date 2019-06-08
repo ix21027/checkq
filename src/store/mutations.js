@@ -24,6 +24,13 @@ export default {
     }
   },
   errorOccured(state, payload) {
-    state.errors = [...state.errors, payload.error];
-  }
+    state.errors = [...state.errors, {
+      id: state.errorCount,
+      title: payload.error
+    }];
+    state.errorCount+=1
+  },
+  deleteError(state,payload){
+    state.errors = state.errors.filter(item => item.id !== payload.id)
+  },
 }

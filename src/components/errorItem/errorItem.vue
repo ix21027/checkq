@@ -39,9 +39,7 @@ export default {
       this.deleteError({id: this.error.id})
     },
     delete(){
-      this.timeoutId = setTimeout(function(id, fun){
-        fun({id})
-      },4000,this.error.id, this.deleteError)
+      this.timeoutId = setTimeout(this.deleteError,4000,{id: this.error.id})
     }
   },
 }

@@ -23,7 +23,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import errorItem from '@/components/errorItem/errorItem'
+import ErrorItem from '@/components/ErrorItem/ErrorItem'
 
 export default {
   computed: {
@@ -34,7 +34,7 @@ export default {
     ]),
   },
   components:{
-    appErrorItem: errorItem,
+    appErrorItem: ErrorItem,
   },
 }
 </script>

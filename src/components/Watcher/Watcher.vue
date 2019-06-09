@@ -48,6 +48,7 @@ export default {
     right: 0;
     bottom: 0;
     padding: 10px;
+    width: 100vh;
     .error-item {
       background: rgba($red, 0.9);
       padding: 10px;

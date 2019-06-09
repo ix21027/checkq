@@ -1,3 +1,6 @@
+import Katex from 'katex';
+
+
 export function formatTime (ms) {
   let seconds = Math.floor(ms / 1000)
   let minutes = Math.floor(seconds / 60)
@@ -43,4 +46,15 @@ export function randSelect(number, array) {
   }
 
   return randArray;
+}
+
+export function renderFormula(expression) {
+  const chank = expression.split('$') || '';
+  let html = '';
+  for (let i = 0; i < chank.length; i += 2) {
+    html += `<span>${chank[i] || ''}</span> ${Katex.renderToString(chank[i + 1] || '', {
+      throwOnError: false,
+    })}`
+  }
+  return html;
 }

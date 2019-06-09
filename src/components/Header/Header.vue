@@ -5,29 +5,26 @@
       </div>
       <div class="links">
         <div class="control">
-          <v-btn flat to='bank' dark>
+          <v-btn flat dark to='bank'>
             <v-icon left>info</v-icon>
             Банк питань
           </v-btn>
-
         </div>
-
-<!--
-          <v-btn flat dark @click="signOut">
-            <v-icon>directions_run</v-icon>
-            Вийти</v-btn> -->
-        </div>
+      </div>
   </v-toolbar>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   methods: {
+    ...mapActions(['fetchBank']),
     toHome() {
       this.$router.push('/');
-    },
+    }
   }
- };
+};
 </script>
 
 <style lang='scss'>

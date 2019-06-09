@@ -9,6 +9,7 @@ import state from './state'
 import categories from './modules/categories'
 import tests from './modules/tests'
 import user from './modules/user'
+import bank from './modules/bank'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
   modules: {
     categories,
     tests,
-    user
+    user,
+    bank
   }
 })

@@ -5,8 +5,12 @@
       <v-text-field
         label="пошук"
         v-model="search"
+        @keyup.enter="findTest"
+        @blur="findTest"
+        :prepend-icon-cb="clean"
+        prepend-icon="close"
         append-icon="search"
-
+        @click:append="findTest"
       />
     </div>
   </v-flex>
@@ -34,6 +38,8 @@ export default {
   data() {
     return {
       search: this.query,
+      searchResult: [],
+      searchResultQuery: '',
     }
   },
   props: ['query'],
@@ -43,6 +49,24 @@ export default {
   },
   methods: {
     ...mapActions(['fetchBank']),
+    clean(){
+      this.search = '';
+      this.searchResult = [];
+      this.$router.push(`/bank`)
+    },
+    findTest() {
+      if(this.searchResultQuery === this.search){
+        return ;
+      }
+      this.$router.push(`/bank?q=${this.search}`)
+      const options = {
+        keys: ['question_name']
+      };
+
+      const fuse = new Fuse(this.tests, options);
+      this.searchResult = [...fuse.search(this.query).slice(0,10)];
+      this.searchResultQuery = this.search;
+    }
   },
   mounted() {
     if (this.tests.length === 0) {
@@ -58,26 +82,10 @@ export default {
         return state.bank.subjects;
       }
     }),
-    searchResult() {
-      if (!this.search) {
-        return this.tests;
-      }
-      const options = {
-        keys: ['question_name']
-      };
-
-      const fuse = new Fuse(this.tests, options);
-      return fuse.search(this.query);
-    },
     isSearch() {
       return !!this.query;
     }
   },
-  watch: {
-    search(value) {
-      this.$router.push(`/bank?q=${value}`)
-    }
-  }
 }
 </script>
 

@@ -1,17 +1,10 @@
 import { http, status } from '@/fetchapi';
 import { renderFormula } from '@/utils';
-import mock from '@/mocks/bank.js';
 
 const userStore = {
   state: {
     tests: [],
     subjects: [],
-  },
-
-  getters: {
-    getBySubject(state, payload) {
-      console.log(payload);
-    }
   },
 
   mutations: {
@@ -30,7 +23,7 @@ const userStore = {
 
         let { data: bankData } = await http.get('bank');
         const { data: subjectData } = await http.get('subjects');
-        
+
         bankData = bankData.map(test => ({
             ...test,
             question_name: renderFormula(test.question_name),
@@ -52,18 +45,6 @@ const userStore = {
          *  question_count: Number,
          * }
         */
-
-        console.log(bankData);
-        console.log(subjectData);
-
-
-        // let data = [];
-        // let subj = [];
-        // for (let i = 0; i < mock.length; i += 1) {
-        //   const questions = mock[i].questions.map(q => ({...q, id_subject: mock[i].id_subject}));
-        //   data = [...data, ...questions]
-        //   subj = [...subj, {id: mock[i].id_subject, name: mock[i].name}];
-        // }
 
         commit('setBank', { tests: bankData, subjects: subjectData })
         fetchStatus = status.success;

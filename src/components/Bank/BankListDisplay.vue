@@ -1,16 +1,12 @@
 <template>
   <v-flex md6>
     <v-flex>
-
-      <v-select
-        :items="availableSplitNumber"
-        v-model="testPerPage"
-      ></v-select>
       <v-tabs
         v-model="currentTab"
         slider-color="orange"
         fixed-tabs
         color="transparent"
+        :show-arrows="$vuetify.breakpoint.smAndUp"
       >
         <v-tab
           v-for="subject in subjects"
@@ -53,8 +49,7 @@
             ></v-pagination>
           </v-layout>
         </v-tab-item>
-
-    </v-tabs>
+      </v-tabs>
     </v-flex>
   </v-flex>
 </template>
@@ -73,18 +68,21 @@ export default {
       default: () => [],
     }
   },
-
   data() {
     return {
       currentTab: 0, // number of currentTab, index of subject in array
-      paginationOffsets: new Array(this.subjects.length).fill(1),
-      paginationPageNumbers: new Array(this.subjects.length).fill(0),
+      paginationOffsets: [],
+      // paginationPageNumbers: new Array(this.subjects.length).fill(0),
       testPerPage: 20,
-      availableSplitNumber: [10, 20, 40, 60]
     }
   },
   components: {
     appAnswer: BankAnswer,
+  },
+  watch: {
+    subjects(){
+      this.paginationOffsets = new Array(this.subjects.length).fill(1);
+    }
   },
   computed: {
     categories() {
@@ -98,7 +96,7 @@ export default {
       return r;
     },
     subjectTests() {
-      return this.subjects.map(subject => 
+      return this.subjects.map(subject =>
         this.tests.filter(test => test.subject_id === subject.id)
       );
     },
@@ -119,7 +117,7 @@ export default {
     },
     paginationSizes() {
       return this.subjectTests.map(tests => {
-        return Math.floor(tests.length / this.testPerPage) + 1;
+        return Math.ceil(tests.length / this.testPerPage);
       });
     },
     maxPaginationSize() {
@@ -135,7 +133,6 @@ export default {
       return this;
     },
   },
-
 }
 </script>
 

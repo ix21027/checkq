@@ -59,6 +59,10 @@ export default {
   }
 }
 
+.question-mark{
+  display: flex;
+  align-items: center;
+}
 .answer {
   font-size: 10pt;
   display: flex;

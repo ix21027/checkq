@@ -49,6 +49,7 @@ export default {
   background: $black !important;
   display: flex;
   width: 100vw !important;
+  align-items: center;
   &>* {
     width: 100%;
   }

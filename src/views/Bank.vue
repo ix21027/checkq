@@ -7,7 +7,7 @@
         v-model="search"
         @keyup.enter="findTest"
         @blur="findTest"
-        :prepend-icon-cb="clean"
+        @click:prepend="clean"
         prepend-icon="close"
         append-icon="search"
         @click:append="findTest"
@@ -64,7 +64,7 @@ export default {
       };
 
       const fuse = new Fuse(this.tests, options);
-      this.searchResult = [...fuse.search(this.query).slice(0,10)];
+      this.searchResult = [...fuse.search(this.search).slice(0,10)];
       this.searchResultQuery = this.search;
     }
   },
@@ -84,6 +84,12 @@ export default {
     }),
     isSearch() {
       return !!this.query;
+    }
+  },
+  watch: {
+    tests(){
+      this.searchResultQuery = '';
+      this.findTest()
     }
   },
 }

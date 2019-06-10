@@ -54,6 +54,7 @@ export function renderFormula(expression) {
   for (let i = 0; i < chank.length; i += 2) {
     html += `<span>${chank[i] || ''}</span> ${Katex.renderToString(chank[i + 1] || '', {
       throwOnError: false,
+      strict: 'ignore',
     })}`
   }
   return html;

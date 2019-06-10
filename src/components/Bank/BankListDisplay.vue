@@ -72,7 +72,6 @@ export default {
     return {
       currentTab: 0, // number of currentTab, index of subject in array
       paginationOffsets: [],
-      // paginationPageNumbers: new Array(this.subjects.length).fill(0),
       testPerPage: 20,
     }
   },

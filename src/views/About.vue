@@ -46,7 +46,7 @@
         Зворотній зв'язок
       </div>
       <div class="body">
-        З будь-яких питань щодо сайту надсилайте лист на адресу: foegit@gmail.com
+        З будь-яких питань щодо сайту надсилайте лист на адресу: <a href="mailto:foegit@gmail.com">foegit@gmail.com</a>
       </div>
     </div>
   </div>

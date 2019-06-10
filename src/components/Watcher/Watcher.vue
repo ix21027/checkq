@@ -9,15 +9,21 @@
       />
     </div>
     <div class="error-log">
-      <div class="error-item" v-for='(error, i) in errors' :key='i'>{{error}}</div>
+      <div v-for='(error, i) in errors' :key='i'>
+        <app-error-item
+          :error="error"
+          :index="i"
+        >
+        </app-error-item>
+      </div>
     </div>
   </div>
 </template>
 
 
 <script>
-
 import { mapState } from 'vuex'
+import ErrorItem from '@/components/ErrorItem/ErrorItem'
 
 export default {
   computed: {
@@ -26,34 +32,36 @@ export default {
       'loader',
       'errors',
     ]),
-  }
+  },
+  components:{
+    appErrorItem: ErrorItem,
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/colors.scss';
 
-  .loader {
-    position: fixed;
-    width: 100vw;
-    height: calc(100vh + 15px);
-    left: 0;;
-    top: -15px;
-    z-index: 2;
-    background: rgba($color: #000000, $alpha: 0.3);
-  }
-  .error-log {
-    position: fixed;
-    z-index: 10;
-    right: 0;
-    bottom: 0;
+.loader {
+  position: fixed;
+  width: 100vw;
+  height: calc(100vh + 15px);
+  left: 0;;
+  top: -15px;
+  z-index: 2;
+  background: rgba($color: #000000, $alpha: 0.3);
+}
+.error-log {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  width: 100vh;
+  .error-item {
+    background: rgba($red, 0.9);
     padding: 10px;
-    width: 100vh;
-    .error-item {
-      background: rgba($red, 0.9);
-      padding: 10px;
-      border-radius: 2px;
-      font-weight: bold;
-    }
+    border-radius: 2px;
+    font-weight: bold;
   }
+}
 </style>

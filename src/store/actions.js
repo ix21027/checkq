@@ -6,5 +6,5 @@ export default {
     const response = await axios.get('https://reqres.in/api/users');
     const data = response.data.data;
     commit('updateUsers', { userList: data });
-  }
+  },
 };

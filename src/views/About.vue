@@ -30,7 +30,7 @@
         <app-author
           name="Бачу Михайло"
           link="https://t.me/Misha_Bachu"
-          link-title="@Misha_Bachut"
+          link-title="@Misha_Bachu"
           link-description="Telegram"
         />
       </div>

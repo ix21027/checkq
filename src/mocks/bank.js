@@ -60,52 +60,52 @@ const data =[
     name: 'Методи обчислень',
     questions: [
       {
-        id_question: 1,
+        id_question: 11,
         question_title: 'Як звaти бєтмена',
         answer_title: 'сім'
       },
       {
-        id_question: 2,
+        id_question: 12,
         question_title: 'Знaйти подвiйний інтигрований добуток з суми інших черепах?',
         answer_title: '11'
       },
       {
-        id_question: 3,
+        id_question: 13,
         question_title: 'Знайти квазілінійний простір ортогональних кілець Мебіуса',
         answer_title: 'в мене лапки замість рук, дайте це завдання іншому'
       },
       {
-        id_question: 4,
+        id_question: 14,
         question_title: 'Скільки потрібно відкрутити гайок щоб вийшла черепаха?',
         answer_title: 'десь 5-6 пятого, 7-8 пятого'
       },
       {
-        id_question: 5,
+        id_question: 15,
         question_title: 'Скільки літрів спирту потрібно щоб напоїти маленького котика?',
         answer_title: '144'
       },
       {
-        id_question: 6,
+        id_question: 16,
         question_title: 'Чому дорівнює корень з пяти?',
         answer_title: 'мабуть 11'
       },
       {
-        id_question: 7,
+        id_question: 17,
         question_title: 'А це пямятник свині',
         answer_title: 'ніт'
       },
       {
-        id_question: 8,
+        id_question: 18,
         question_title: 'У кого з рогатої худоби пять хвостів',
         answer_title: 'у пятихвостої корови'
       },
       {
-        id_question: 9,
+        id_question: 19,
         question_title: 'Чому свині такі свині? ',
         answer_title: 'А що ви ще від свиней хотіли'
       },
       {
-        id_question: 10,
+        id_question: 20,
         question_title: 'Назвіть формулу води',
         answer_title: 'Аш2О'
       }

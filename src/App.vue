@@ -30,8 +30,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import '@/styles/theme.scss';
+
 .content {
   overflow: hidden;
 }
+
+
+
 </style>

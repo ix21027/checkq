@@ -19,6 +19,7 @@ export default {
       for (let i = 0; i < arr.length ; i +=2 ) {
         html += `<span>${arr[i] || ''}</span> ${Katex.renderToString(arr[i+1] || '', {
           throwOnError: false,
+          strict: 'ignore',
         })}`
       }
       return html;

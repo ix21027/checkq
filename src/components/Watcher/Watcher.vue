@@ -40,6 +40,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/colors.scss';
 
 .loader {
   position: fixed;
@@ -56,5 +57,12 @@ export default {
   right: 0;
   bottom: 0;
   padding: 10px;
+  width: 350px;
+  .error-item {
+    background: rgba($red, 0.9);
+    padding: 10px;
+    border-radius: 2px;
+    font-weight: bold;
+  }
 }
 </style>

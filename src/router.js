@@ -32,6 +32,13 @@ export default new Router({
       component: () => import('./views/Privacy.vue')
     },
     {
+      path: '/bank',
+      name: 'bank',
+      component: () => import('./views/Bank.vue'),
+      props: (route) => {
+        return ({ query: route.query.q });}
+    },
+    {
       path: '*',
       component: () => import('./views/NotFound.vue')
     }

@@ -53,6 +53,7 @@ export default {
   padding: 20px 10px;
   color: #fff;
   background: #333;
+  border-radius: 2px;
 
 }
 

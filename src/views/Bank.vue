@@ -88,8 +88,10 @@ export default {
   },
   watch: {
     tests(){
-      this.searchResultQuery = '';
-      this.findTest()
+      if (this.query) {
+        this.searchResultQuery = '';
+        this.findTest()
+      }
     }
   },
 }

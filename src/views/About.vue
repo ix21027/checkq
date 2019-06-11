@@ -1,59 +1,80 @@
 <template>
   <div class="place">
-    <div class="record">
-      <div class="head">
-        Про сайт
+    <app-tab
+      header="Про сайт"
+      :img-src="aboutImage"
+    >
+      Сайт створений для підготовки до державних іспитів спеціальностей “Прикладна математика” та “Інформатика”.
+      На сайті можна пройти <router-link to="/">тестування</router-link> та переглянути <router-link to="/bank">банк</router-link> питань.
+    </app-tab>
+    <app-tab
+      header="Розробники"
+      :img-src="devImage"
+      left
+    >
+      Сайт розроблений студентами спеціальності "Прикладна математика" Донецького Національного Університету імені Василя Стуса.
+      <div class="author-list">
+
+        <app-author
+          name="Главацький Сергій"
+          link="https://t.me/foegit"
+          link-title="@foegit"
+          link-description="Telegram"
+        />
+        <app-author
+          name="Луценко Владислав"
+          link="https://t.me/fon_luchs"
+          link-title="@fon_luchs"
+          link-description="Telegram"
+        />
+        <app-author
+          name="Бачу Михайло"
+          link="https://t.me/Misha_Bachu"
+          link-title="@Misha_Bachut"
+          link-description="Telegram"
+        />
       </div>
-      <div class="body">
-        Сайт розроблений студентами Донецького Національного Університету  імені Василя Стуса для підготовки до державних іспитів спеціальностей “Прикладна математика” та “Інформатика” 2019 року.
-      </div>
-    </div>
-    <div class="record">
-      <div class="head">
-        Розробники
-      </div>
-      <div class="body">
-        <div class="item-name">
-          <div class="circle"></div>
-          <div>
-            Главацький Сергій - <a target="_blank" href="https://t.me/foegit">@foegit</a>
-          </div>
-        </div>
-        <div class="item-name">
-          <div class="circle"></div>
-          <div>
-            Луценко Владислав - <a target="_blank" href="https://t.me/fon_luchs">@fon_luchs</a>
-          </div>
-        </div>
-        <div class="item-name">
-          <div class="circle"></div>
-          <div>
-            Бачу Михайло - <a target="_blank" href="https://t.me/Misha_Bachu">@Misha_Bachu</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="record">
-      <div class="head">
-        Подяка
-      </div>
-      <div class="body">
-        Висловлюємо подяку за допомогу в пошуку помилок Островській Ані та Резниченко Тетяні.
-      </div>
-    </div>
-    <div class="record">
-      <div class="head">
-        Зворотній зв'язок
-      </div>
-      <div class="body">
-        З будь-яких питань щодо сайту надсилайте лист на адресу: <a href="mailto:foegit@gmail.com">foegit@gmail.com</a>
-      </div>
-    </div>
+    </app-tab>
+    <app-tab
+      header="Вдячність"
+      :img-src="mathImage"
+    >
+      Висловлюємо вдячність за допомогу в пошуку помилок <strong>Островській Ані</strong> та <strong>Резниченко Тетяні</strong>.
+    </app-tab>
+    <div class="tab-info">
+    <app-tab
+      header="Зворотній зв'язок"
+      :img-src="contractImage"
+      left
+    >
+      З будь-яких питань щодо сайту надсилайте лист на адресу: <a href="mailto:foegit@gmail.com">foegit@gmail.com</a>
+    </app-tab>
+  </div>
   </div>
 </template>
 
 <script>
+import AboutTab from '@/components/About/AboutTab.vue';
+import AboutAuthor from '@/components/About/AboutAuthor.vue';
+
+import AboutImage from '@/assets/rocket.svg';
+import DevelopersImage from '@/assets/dev.svg';
+import MathImage from '@/assets/math.svg';
+import ContractImage from '@/assets/paper-plane.svg';
+
 export default {
+  data() {
+    return {
+      aboutImage: AboutImage,
+      devImage: DevelopersImage,
+      mathImage: MathImage,
+      contractImage: ContractImage,
+    }
+  },
+  components: {
+    appTab: AboutTab,
+    appAuthor: AboutAuthor,
+  },
 
 }
 </script>
@@ -62,52 +83,45 @@ export default {
 @import '@/styles/mixin.scss';
 @import '@/styles/theme.scss';
 
-a{
+a {
   text-decoration: none;
+  color: $light-primary-color !important;
+  position: relative;
+  &::after {
+    position: absolute;
+    bottom: -4px;
+    content: '';
+    display: inline-block;
+    width: 100%;
+    border-radius: 2px;
+    height: 2px;
+    background: $light-primary-color;
+    width: 0;
+    left: 0;
+    transition: width 0.4s;
+  }
+  &:hover::after{
+      width: 100%;
+    }
 }
+
+.author-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  @include tablet-landscape {
+    flex-direction: row;
+  }
+}
+
 .place{
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  margin: 0 auto;
-  margin-top: 20px;
-  max-width: 900px;
-  .record{
-    margin-top: 10px;
-    padding: 10px;
-    .head{
-      font-weight: bold;
-    }
-    .body{
-      .item-name{
-        display: flex;
-        flex-direction: row;
-        padding: 10px 0;
-        .circle{
-          width: 20px;
-          height: 20px;
-          margin: 0 10px;
-          border-radius: 15px;
-          background: $main-color;
-        }
-      }
-      padding: 10px;
-      padding-left: 40px;
-    }
+  justify-content: center;
+  align-items: stretch;
+  @include tablet-landscape {
+      margin: 20px auto;
   }
-  @include mobile{
-    margin: 0;
-    .record{
-      padding: 0;
-      .head{
-        display: flex;
-        justify-content: center;
-        padding: 10px;
-      }
-      .body{
-      padding: 0;
-      }
-    }
-  }
+  min-height: calc(100vh - 70px);
 }
 </style>

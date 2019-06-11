@@ -1,6 +1,6 @@
 <template>
   <v-flex md6>
-    <v-flex>
+    <v-flex class='bank-list'>
       <v-tabs
         v-model="currentTab"
         slider-color="orange"
@@ -18,6 +18,8 @@
           <v-tab-item
             v-for="(subject, index) in subjects"
             :key="subject.id"
+            :transition="false"
+            :reverse-transition="false"
           >
           <v-layout justify-center>
             <v-pagination
@@ -71,7 +73,7 @@ export default {
   data() {
     return {
       currentTab: 0, // number of currentTab, index of subject in array
-      paginationOffsets: [],
+      paginationOffsets: [...new Array(this.subjects.length).fill(1)],
       testPerPage: 20,
     }
   },
@@ -80,7 +82,7 @@ export default {
   },
   watch: {
     subjects(){
-      this.paginationOffsets = new Array(this.subjects.length).fill(1);
+      this.paginationOffsets = [...new Array(this.subjects.length).fill(1)];
     }
   },
   computed: {
@@ -135,6 +137,35 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
+@import '@/styles/theme.scss';
+
+// .bank-list .v-pagination {
+//     border: 2px solid $side-color;
+//     border-radius: 2px;
+// }
+.bank-list .v-pagination li {
+
+
+  & > [type=button] {
+    background: transparent;
+    box-shadow: none;
+  }
+  &:first-child {
+    // display: none;
+    button {
+
+      border: none!important;
+    }
+  }
+  &:last-child {
+    // display: none;
+    button {
+
+      border: none!important;
+    }
+
+  }
+}
 
 </style>

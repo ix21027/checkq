@@ -79,7 +79,7 @@ export default {
         @include mobile{
           display: none;
         }
-     }
+    }
     }
   }
 }

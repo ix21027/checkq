@@ -1,14 +1,19 @@
-import axios from 'axios';
+import { request } from './localApi';
 
-const API_URL = 'https://checkq-api.herokuapp.com/api/';
-
-export const http = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  }
-});
+// No backend: `http` keeps the same interface the Vuex stores expect
+// (axios-like get/post/delete returning a Promise of { data }), but routes
+// every call to the local reimplementation in ./localApi.
+export const http = {
+  get(url) {
+    return request('GET', url);
+  },
+  post(url, body) {
+    return request('POST', url, body);
+  },
+  delete(url) {
+    return request('DELETE', url);
+  },
+};
 
 export const status = {
   start: 'START',
